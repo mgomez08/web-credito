@@ -1,0 +1,22 @@
+@import "../../../scss/index.scss";
+
+.form-register {
+  padding-bottom: 30px;
+  .MuiGrid-container {
+    padding-top: 50px;
+  }
+  .MuiFormControlLabel-root {
+    padding-bottom: 20px;
+  }
+  .MuiTypography-h6 {
+    padding-top: 25px;
+    a {
+      text-decoration: none;
+    }
+  }
+  button {
+    &:hover {
+      color: $primary-color-hover;
+    }
+  }
+}
