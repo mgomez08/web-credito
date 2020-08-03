@@ -10,8 +10,15 @@ import {
   FormControlLabel,
   Button,
   Typography,
+  Snackbar,
 } from "@material-ui/core";
+import {
+  minLengthValidation,
+  emailValidation,
+} from "../../../utils/formValidation";
+import Alert from "@material-ui/lab/Alert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { signUpApi } from "../../../api/user";
 import "./FormRegister.scss";
 import { Link } from "react-router-dom";
 
@@ -28,6 +35,55 @@ export default function FormRegister() {
     privacyPolicy: false,
   });
 
+  const [formValid, setFormValid] = useState({
+    typedoc: false,
+    ndoc: false,
+    names: false,
+    lastname: false,
+    email: false,
+    tel: false,
+    password: false,
+    passwordRepeat: false,
+    privacyPolicy: false,
+  });
+
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = useState("");
+  const [typemessage, setTypeMessage] = useState("success");
+
+  const inputValidation = (e) => {
+    const { type, name } = e.target;
+    if (name === "ndoc") {
+      setFormValid({
+        ...formValid,
+        [name]: minLengthValidation(e.target, 8),
+      });
+    }
+    if (type === "tel") {
+      setFormValid({
+        ...formValid,
+        [name]: minLengthValidation(e.target, 10),
+      });
+    }
+    if (type === "email") {
+      setFormValid({
+        ...formValid,
+        [name]: emailValidation(e.target),
+      });
+    }
+    if (type === "password") {
+      setFormValid({
+        ...formValid,
+        [name]: minLengthValidation(e.target, 6),
+      });
+    }
+    if (type === "checkbox") {
+      setFormValid({
+        ...formValid,
+        [name]: e.target.checked,
+      });
+    }
+  };
   const changeForm = (e) => {
     if (e.target.name === "privacyPolicy") {
       setInputs({
@@ -41,9 +97,67 @@ export default function FormRegister() {
       });
     }
   };
-  const register = (e) => {
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const resetForm = () => {
+    setInputs({
+      typedoc: "",
+      ndoc: "",
+      names: "",
+      lastname: "",
+      email: "",
+      tel: "",
+      password: "",
+      passwordRepeat: "",
+      privacyPolicy: false,
+    });
+    setFormValid({
+      typedoc: false,
+      ndoc: false,
+      names: false,
+      lastname: false,
+      email: false,
+      tel: false,
+      password: false,
+      passwordRepeat: false,
+      privacyPolicy: false,
+    });
+  };
+  const register = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+    if (
+      !inputs.typedoc ||
+      !inputs.ndoc ||
+      !inputs.names ||
+      !inputs.lastname ||
+      !inputs.email ||
+      !inputs.tel ||
+      !inputs.password ||
+      !inputs.passwordRepeat ||
+      !inputs.privacyPolicy
+    ) {
+      setTypeMessage("warning");
+      setMessage("Todos los campos deben ser llenados.");
+    } else if (inputs.password !== inputs.passwordRepeat) {
+      setTypeMessage("error");
+      setMessage("Las contraseñas deben ser iguales");
+    } else {
+      const result = await signUpApi(inputs);
+      if (!result.ok) {
+        setTypeMessage("error");
+        setMessage(result.message);
+      } else {
+        setTypeMessage("success");
+        setMessage(result.message);
+        resetForm();
+      }
+    }
   };
   return (
     <form onChange={changeForm} onSubmit={register}>
@@ -64,13 +178,14 @@ export default function FormRegister() {
               native
               name="typedoc"
               value={inputs.typedoc}
+              onChange={inputValidation}
               inputProps={{
                 id: "type-doc-required",
               }}
             >
               <option aria-label="None" />
-              <option value={10}>Cédula de Ciudadanía</option>
-              <option value={20}>Cédula de Extranjería</option>
+              <option value={"CC"}>Cédula de Ciudadanía</option>
+              <option value={"CT"}>Cédula de Extranjería</option>
             </Select>
             <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
@@ -79,8 +194,10 @@ export default function FormRegister() {
           <FormControl fullWidth={true}>
             <InputLabel htmlFor="ndoc">Número de Identificación</InputLabel>
             <Input
+              error={false}
               name="ndoc"
               aria-describedby="my-helper-text"
+              onChange={inputValidation}
               value={inputs.ndoc}
             />
             <FormHelperText id="my-helper-text">
@@ -94,6 +211,7 @@ export default function FormRegister() {
             <Input
               name="names"
               aria-describedby="my-helper-text"
+              onChange={inputValidation}
               value={inputs.names}
             />
             <FormHelperText id="my-helper-text">
@@ -107,6 +225,7 @@ export default function FormRegister() {
             <Input
               name="lastname"
               aria-describedby="my-helper-text"
+              onChange={inputValidation}
               value={inputs.lastname}
             />
             <FormHelperText id="my-helper-text">
@@ -121,6 +240,7 @@ export default function FormRegister() {
               type="email"
               name="email"
               aria-describedby="my-helper-text"
+              onChange={inputValidation}
               value={inputs.email}
             />
             <FormHelperText id="my-helper-text">
@@ -135,6 +255,7 @@ export default function FormRegister() {
               name="tel"
               type="tel"
               aria-describedby="my-helper-text"
+              onChange={inputValidation}
               value={inputs.tel}
             />
             <FormHelperText id="my-helper-text">
@@ -148,6 +269,7 @@ export default function FormRegister() {
             <Input
               name="password"
               type="password"
+              onChange={inputValidation}
               value={inputs.password}
               aria-describedby="my-helper-text"
             />
@@ -160,8 +282,9 @@ export default function FormRegister() {
           <FormControl fullWidth={true}>
             <InputLabel htmlFor="pwd">Repetir Contraseña</InputLabel>
             <Input
-              name="passwordrepeat"
+              name="passwordRepeat"
               type="password"
+              onChange={inputValidation}
               aria-describedby="my-helper-text"
               value={inputs.passwordRepeat}
             />
@@ -176,6 +299,7 @@ export default function FormRegister() {
               control={
                 <Checkbox
                   name="privacyPolicy"
+                  onChange={inputValidation}
                   checked={inputs.privacyPolicy}
                   color="primary"
                 />
@@ -189,6 +313,7 @@ export default function FormRegister() {
               size="large"
               variant="contained"
               color="primary"
+              onClick={handleClick}
               endIcon={<ExitToAppIcon />}
             >
               Registrarme
@@ -200,6 +325,16 @@ export default function FormRegister() {
             </Typography>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={open}
+          autoHideDuration={4000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} variant="filled" severity={typemessage}>
+            {message}
+          </Alert>
+        </Snackbar>
       </Grid>
     </form>
   );

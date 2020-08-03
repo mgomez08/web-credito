@@ -19,4 +19,8 @@
       color: $primary-color-hover;
     }
   }
+  .error {
+    border: 1px solid $error;
+    background-color: $background-error;
+  }
 }
