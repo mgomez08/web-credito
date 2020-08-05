@@ -1,8 +1,14 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import FormRegister from "../../components/Web/FormRegister";
+import { Redirect } from "react-router-dom";
+import { getAccessTokenApi } from "../../api/auth";
 import "./Register.scss";
+
 export default function Register() {
+  if (getAccessTokenApi()) {
+    return <Redirect to="/user" />;
+  }
   return (
     <Grid
       container

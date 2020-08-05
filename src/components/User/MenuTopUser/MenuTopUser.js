@@ -7,7 +7,7 @@ import {
   IconButton,
   Hidden,
 } from "@material-ui/core";
-
+import { logout } from "../../../api/auth";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
@@ -38,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MenuTopUser(props) {
+  const logoutUser = () => {
+    logout();
+    window.location.reload();
+  };
+
   const classes = useStyles();
   return (
     <div className="menu-top">
@@ -65,6 +70,7 @@ export default function MenuTopUser(props) {
               href="/register"
               color="inherit"
               variant="outlined"
+              onClick={logoutUser}
               endIcon={<ArrowForwardIosIcon />}
             >
               Cerrar Sesión

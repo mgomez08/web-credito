@@ -5,24 +5,10 @@ export default function Home() {
   return (
     <div>
       <Typography variant="h1" color="initial">
-        Estamos en homeeee
+        Inicio
       </Typography>
-      <Typography variant="body1" color="secondary" align="center">
-        Holis
-      </Typography>
-      <Typography variant="h1" color="secondary">
-        lorem
-        askljdaskljdjlkdsalkdjsalkdsajsdjaklsdjlkadsalkjsdajlkadsajkldlkjsdaljksdjlksdalkjsdakjlasdsljadksdaljk
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
-        alksjdjlksadjlkasdjlksaadljksajklsajdlksa aslkdasljkd
+      <Typography variant="h2" color="secondary">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fringilla volutpat ultrices. Morbi pellentesque dolor eget felis feugiat, ac molestie eros facilisis. Quisque semper eu enim in rhoncus. Nam commodo volutpat laoreet. Quisque lobortis ullamcorper felis sit amet viverra. Integer luctus ultricies nibh eu cursus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas mi nisi, efficitur nec semper varius, ultrices tincidunt dolor. Quisque facilisis ac quam vel semper. Maecenas sodales pharetra elit.
       </Typography>
     </div>
   );

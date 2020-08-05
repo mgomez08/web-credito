@@ -6,9 +6,9 @@ import { getAccessTokenApi } from "../../api/auth";
 import "./Login.scss";
 
 export default function Login() {
-  // if (getAccessTokenApi) {
-  //   return <Redirect to="/user" />;
-  // }
+  if (getAccessTokenApi()) {
+    return <Redirect to="/user" />;
+  }
   return (
     <div>
       <Grid
