@@ -8,6 +8,7 @@ import Register from "../pages/Register/Register";
 
 //Other
 import Error404 from "../pages/Error404";
+import { getAccessTokenApi } from "../api/auth";
 
 const routes = [
   {
@@ -24,7 +25,7 @@ const routes = [
   },
   {
     path: "/",
-    component: LayoutBasic,
+    component: getAccessTokenApi() ? LayoutUser : LayoutBasic,
     exact: false,
     routes: [
       {

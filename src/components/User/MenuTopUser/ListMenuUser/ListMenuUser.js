@@ -11,9 +11,14 @@ import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import InfoIcon from "@material-ui/icons/Info";
 import PersonIcon from "@material-ui/icons/Person";
+import { logout } from "../../../../api/auth";
 import "./ListMenuUser.scss";
 
 export default function ListMenuUser() {
+  const logoutUser = () => {
+    logout();
+    window.location.reload();
+  };
   return (
     <div className="list-menu">
       <List component="nav" aria-label="main mailbox folders">
@@ -45,7 +50,7 @@ export default function ListMenuUser() {
       <Divider />
       <List component="nav" aria-label="secondary mailbox folders">
         <Link to="/login">
-          <ListItem button>
+          <ListItem button onClick={logoutUser}>
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
