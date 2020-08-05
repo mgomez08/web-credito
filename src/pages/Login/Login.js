@@ -1,9 +1,14 @@
 import React from "react";
 import FormLogin from "../../components/Web/FormLogin";
 import { Grid, Typography } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
+import { getAccessTokenApi } from "../../api/auth";
 import "./Login.scss";
 
 export default function Login() {
+  // if (getAccessTokenApi) {
+  //   return <Redirect to="/user" />;
+  // }
   return (
     <div>
       <Grid
