@@ -4,19 +4,24 @@ import routes from "./config/routes";
 import "./App.scss";
 import { ThemeProvider } from "@material-ui/core/styles";
 import theme from "./themeConfig";
+import MomentUtils from "@date-io/moment";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import "moment/locale/es";
 import AuthProvider from "./providers/AuthProvider";
 
 function App() {
   return (
     <AuthProvider>
       <ThemeProvider theme={theme}>
-        <Router>
-          <Switch>
-            {routes.map((route, index) => (
-              <RouteWithSubRoutes key={index} {...route} />
-            ))}
-          </Switch>
-        </Router>
+        <MuiPickersUtilsProvider utils={MomentUtils} locale="es">
+          <Router>
+            <Switch>
+              {routes.map((route, index) => (
+                <RouteWithSubRoutes key={index} {...route} />
+              ))}
+            </Switch>
+          </Router>
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
     </AuthProvider>
   );

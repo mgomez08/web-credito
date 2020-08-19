@@ -5,6 +5,7 @@ import LayoutUser from "../layouts/LayoutUser";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import Profile from "../pages/Profile/Profile";
 
 //Other
 import Error404 from "../pages/Error404";
@@ -41,6 +42,11 @@ const routes = [
       {
         path: "/register",
         component: Register,
+        exact: true,
+      },
+      {
+        path: "/perfil",
+        component: Profile,
         exact: true,
       },
       {

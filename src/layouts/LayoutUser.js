@@ -44,7 +44,7 @@ export default function LayoutUser(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  console.log(user);
+
   if (!user && !isLoading) {
     return (
       <>
@@ -54,6 +54,7 @@ export default function LayoutUser(props) {
     );
   }
   if (user && !isLoading) {
+    console.log(user);
     return (
       <div className={classes.root}>
         <MenuTopUser open={open} handleDrawerOpen={handleDrawerOpen} />
