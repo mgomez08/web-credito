@@ -2,7 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Box, Typography, Tabs, Tab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import "./VerticalTab.scss";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import PersonalForm from "../../PersonalForm";
+import FinancialForm from "../../FinancialForm";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
+    overflow: "visible",
   },
 }));
 export default function VerticalTab() {
@@ -58,17 +63,23 @@ export default function VerticalTab() {
         variant="scrollable"
         value={value}
         onChange={handleChange}
+        indicatorColor="secondary"
+        textColor="secondary"
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Personal" {...a11yProps(0)} />
-        <Tab label="Financiera" {...a11yProps(1)} />
+        <Tab icon={<AccountCircleIcon />} label="Personal" {...a11yProps(0)} />
+        <Tab
+          icon={<MonetizationOnIcon />}
+          label="Financiera"
+          {...a11yProps(1)}
+        />
       </Tabs>
       <TabPanel value={value} index={0}>
         <PersonalForm />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <FinancialForm />
       </TabPanel>
     </div>
   );

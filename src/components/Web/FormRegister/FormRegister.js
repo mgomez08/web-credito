@@ -16,6 +16,10 @@ import {
   minLengthValidation,
   emailValidation,
 } from "../../../utils/formValidation";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Alert from "@material-ui/lab/Alert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { signUpApi } from "../../../api/user";
@@ -33,6 +37,7 @@ export default function FormRegister() {
     password: "",
     passwordRepeat: "",
     privacyPolicy: false,
+    showPassword: false,
   });
 
   const [formValid, setFormValid] = useState({
@@ -50,6 +55,15 @@ export default function FormRegister() {
   const [open, setOpen] = React.useState(false);
   const [message, setMessage] = useState("");
   const [typemessage, setTypeMessage] = useState("success");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const inputValidation = (e) => {
     const { type, name } = e.target;
@@ -268,10 +282,21 @@ export default function FormRegister() {
             <InputLabel htmlFor="pwd">Contraseña</InputLabel>
             <Input
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               onChange={inputValidation}
               value={inputs.password}
               aria-describedby="my-helper-text"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -283,10 +308,21 @@ export default function FormRegister() {
             <InputLabel htmlFor="pwd">Repetir Contraseña</InputLabel>
             <Input
               name="passwordRepeat"
-              type="password"
+              type={showPassword ? "text" : "password"}
               onChange={inputValidation}
               aria-describedby="my-helper-text"
               value={inputs.passwordRepeat}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.

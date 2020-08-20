@@ -10,6 +10,10 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import "./FormLogin.scss";
 import { signInApi } from "../../../api/user";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../utils/constants";
@@ -20,6 +24,7 @@ export default function FormLogin() {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
   const changeForm = (e) => {
     setInputs({
       ...inputs,
@@ -36,6 +41,13 @@ export default function FormLogin() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   const login = async (e) => {
@@ -85,8 +97,19 @@ export default function FormLogin() {
             <Input
               id="pwd"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               aria-describedby="my-helper-text"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
