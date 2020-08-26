@@ -21,11 +21,83 @@ import Alert from "@material-ui/lab/Alert";
 import "./PersonalForm.scss";
 
 export default function PersonalForm() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [inputs, setInputs] = useState({
+    names: "",
+    lastname: "",
+    datebirth: null,
+    departbirth: "",
+    citybirth: "",
+    typedoc: "",
+    ndoc: "",
+    age: "",
+    educationallevel: "",
+    profession: "",
+    occupation: "",
+    numpersonsfamilynucleus: "",
+    numpersonsdependents: "",
+    typehousing: "",
+    departresidence: "",
+    cityresidence: "",
+    homeaddress: "",
+    yearsresidence: "",
+  });
+  const [formValid, setFormValid] = useState({
+    names: false,
+    lastname: false,
+    datebirth: false,
+    departbirth: false,
+    citybirth: false,
+    typedoc: false,
+    ndoc: false,
+    age: false,
+    educationallevel: false,
+    profession: false,
+    occupation: false,
+    numpersonsfamilynucleus: false,
+    numpersonsdependents: false,
+    typehousing: false,
+    departresidence: false,
+    cityresidence: false,
+    homeaddress: false,
+    yearsresidence: false,
+  });
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const inputValidation = (e) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+
+    const { type, name } = e.target;
+    console.log(name);
+    if (name === "ndoc") {
+      setFormValid({ ...formValid, [name]: minLengthValidation(e.target, 8) });
+    }
+    if (type === "tel") {
+      setFormValid({
+        ...formValid,
+        [name]: minLengthValidation(e.target, 10),
+      });
+    }
+    if (type === "email") {
+      setFormValid({
+        ...formValid,
+        [name]: emailValidation(e.target),
+      });
+    }
+    if (type === "password") {
+      setFormValid({
+        ...formValid,
+        [name]: minLengthValidation(e.target, 6),
+      });
+    }
+    if (type === "checkbox") {
+      setFormValid({
+        ...formValid,
+        [name]: e.target.checked,
+      });
+    }
   };
+
+  const handleDateChange = (date) => {};
+
   return (
     <form className="personal-form">
       <Grid
@@ -41,8 +113,8 @@ export default function PersonalForm() {
             <Input
               name="names"
               aria-describedby="my-helper-text"
-              //onChange={inputValidation}
-              //value={inputs.names}
+              onChange={inputValidation}
+              value={inputs.names}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -55,8 +127,8 @@ export default function PersonalForm() {
             <Input
               name="lastname"
               aria-describedby="my-helper-text"
-              // onChange={inputValidation}
-              // value={inputs.lastname}
+              onChange={inputValidation}
+              value={inputs.lastname}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -68,12 +140,12 @@ export default function PersonalForm() {
             className="personal-form__date"
             fullWidth={true}
             margin="normal"
-            id="date-picker-dialog"
+            name="datebirth"
             aria-describedby="my-helper-text"
             label="Fecha de nacimiento"
             format="DD/MM/yyyy"
-            value={selectedDate}
-            onChange={handleDateChange}
+            value={inputs.datebirth}
+            onChange={inputValidation}
             KeyboardButtonProps={{
               "aria-label": "change date",
             }}
@@ -89,16 +161,16 @@ export default function PersonalForm() {
             </InputLabel>
             <Select
               native
-              name="depart-birth"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
+              name="departbirth"
+              value={inputs.departbirth}
+              onChange={inputValidation}
               inputProps={{
                 id: "depart-birth-required",
               }}
             >
               <option aria-label="None" />
-              <option value={"CC"}>Tolima</option>
-              <option value={"CT"}>Cundinamarca</option>
+              <option value={"Tolima"}>Tolima</option>
+              <option value={"Cundinamarca"}>Cundinamarca</option>
             </Select>
             <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
@@ -108,16 +180,16 @@ export default function PersonalForm() {
             <InputLabel htmlFor="city-birth">Cuidad de nacimiento</InputLabel>
             <Select
               native
-              name="city-birth"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
+              name="citybirth"
+              value={inputs.citybirth}
+              onChange={inputValidation}
               inputProps={{
                 id: "city-birth-required",
               }}
             >
               <option aria-label="None" />
-              <option value={"CC"}>Espinal</option>
-              <option value={"CT"}>Girardot</option>
+              <option value={"Espinal"}>Espinal</option>
+              <option value={"Girardot"}>Girardot</option>
             </Select>
             <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
@@ -128,8 +200,8 @@ export default function PersonalForm() {
             <Select
               native
               name="typedoc"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
+              value={inputs.typedoc}
+              onChange={inputValidation}
               inputProps={{
                 id: "type-doc-required",
               }}
@@ -149,8 +221,8 @@ export default function PersonalForm() {
               error={false}
               name="ndoc"
               aria-describedby="my-helper-text"
-              //   onChange={inputValidation}
-              //   value={inputs.ndoc}
+              onChange={inputValidation}
+              value={inputs.ndoc}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -165,8 +237,8 @@ export default function PersonalForm() {
               error={false}
               name="age"
               aria-describedby="my-helper-text"
-              //   onChange={inputValidation}
-              //   value={inputs.ndoc}
+              onChange={inputValidation}
+              value={inputs.age}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -180,21 +252,21 @@ export default function PersonalForm() {
             </InputLabel>
             <Select
               native
-              name="educational-level"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
+              name="educationallevel"
+              value={inputs.educationallevel}
+              onChange={inputValidation}
               inputProps={{
                 id: "educational-level-required",
               }}
             >
               <option aria-label="None" />
-              <option value={"CC"}>Bachiller</option>
-              <option value={"CT"}>Técnico</option>
-              <option value={"CC"}>Tecnólogo</option>
-              <option value={"CT"}>Profesional</option>
-              <option value={"CC"}>Especialista</option>
-              <option value={"CT"}>Magister</option>
-              <option value={"CT"}>Doctorado</option>
+              <option value={"Bachiller"}>Bachiller</option>
+              <option value={"Técnico"}>Técnico</option>
+              <option value={"Tecnólogo"}>Tecnólogo</option>
+              <option value={"Profesional"}>Profesional</option>
+              <option value={"Especialista"}>Especialista</option>
+              <option value={"Magister"}>Magister</option>
+              <option value={"Doctorado"}>Doctorado</option>
             </Select>
             <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
@@ -205,8 +277,8 @@ export default function PersonalForm() {
             <Input
               name="profession"
               aria-describedby="my-helper-text"
-              //onChange={inputValidation}
-              //value={inputs.names}
+              onChange={inputValidation}
+              value={inputs.profession}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -219,8 +291,8 @@ export default function PersonalForm() {
             <Input
               name="occupation"
               aria-describedby="my-helper-text"
-              //onChange={inputValidation}
-              //value={inputs.names}
+              onChange={inputValidation}
+              value={inputs.occupation}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -235,10 +307,10 @@ export default function PersonalForm() {
             <Input
               type="number"
               error={false}
-              name="num-persons-family-nucleus"
+              name="numpersonsfamilynucleus"
               aria-describedby="my-helper-text"
-              //   onChange={inputValidation}
-              //   value={inputs.ndoc}
+              onChange={inputValidation}
+              value={inputs.numpersonsfamilynucleus}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -253,10 +325,10 @@ export default function PersonalForm() {
             <Input
               type="number"
               error={false}
-              name="num-persons-dependents"
+              name="numpersonsdependents"
               aria-describedby="my-helper-text"
-              //   onChange={inputValidation}
-              //   value={inputs.ndoc}
+              onChange={inputValidation}
+              value={inputs.numpersonsdependents}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -265,14 +337,14 @@ export default function PersonalForm() {
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl fullWidth={true}>
-            <InputLabel htmlFor="type-doc">Tipo de vivienda</InputLabel>
+            <InputLabel htmlFor="type-housing">Tipo de vivienda</InputLabel>
             <Select
               native
-              name="typedoc"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
+              name="typehousing"
+              value={inputs.typehousing}
+              onChange={inputValidation}
               inputProps={{
-                id: "type-doc-required",
+                id: "type-housing-required",
               }}
             >
               <option aria-label="None" />
@@ -290,16 +362,16 @@ export default function PersonalForm() {
             </InputLabel>
             <Select
               native
-              name="depart-residence"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
+              name="departresidence"
+              value={inputs.departresidence}
+              onChange={inputValidation}
               inputProps={{
                 id: "depart-birth-required",
               }}
             >
               <option aria-label="None" />
-              <option value={"CC"}>Tolima</option>
-              <option value={"CT"}>Cundinamarca</option>
+              <option value={"Tolima"}>Tolima</option>
+              <option value={"Cundinamarca"}>Cundinamarca</option>
             </Select>
             <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
@@ -311,16 +383,16 @@ export default function PersonalForm() {
             </InputLabel>
             <Select
               native
-              name="city-residence"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
+              name="cityresidence"
+              value={inputs.cityresidence}
+              onChange={inputValidation}
               inputProps={{
-                id: "city-birth-required",
+                id: "city-residence-required",
               }}
             >
               <option aria-label="None" />
-              <option value={"CC"}>Espinal</option>
-              <option value={"CT"}>Girardot</option>
+              <option value={"Espinal"}>Espinal</option>
+              <option value={"Girardot"}>Girardot</option>
             </Select>
             <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
@@ -331,10 +403,10 @@ export default function PersonalForm() {
               Dirección de vivienda
             </InputLabel>
             <Input
-              name="home-address"
+              name="homeaddress"
               aria-describedby="my-helper-text"
-              //onChange={inputValidation}
-              //value={inputs.names}
+              onChange={inputValidation}
+              value={inputs.homeaddress}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.
@@ -349,10 +421,10 @@ export default function PersonalForm() {
             <Input
               type="number"
               error={false}
-              name="years-residence"
+              name="yearsresidence"
               aria-describedby="my-helper-text"
-              //   onChange={inputValidation}
-              //   value={inputs.ndoc}
+              onChange={inputValidation}
+              value={inputs.yearsresidence}
             />
             <FormHelperText id="my-helper-text">
               Campo Obligatorio.

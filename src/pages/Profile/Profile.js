@@ -2,15 +2,11 @@ import React from "react";
 import { Grid, Typography } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import { getAccessTokenApi } from "../../api/auth";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import InformationTabs from "../../components/User/Profile/InformationTabs";
 import "./Profile.scss";
 
 export default function Profile() {
-  //   if (!getAccessTokenApi()) {
-  //     return <Redirect to="/login" />;
-  //   }
-
   const useStyles = makeStyles((theme) => ({
     content: {
       [theme.breakpoints.up("md")]: {
@@ -22,6 +18,10 @@ export default function Profile() {
     },
   }));
   const classes = useStyles();
+  // if (!getAccessTokenApi()) {
+  //   return <Redirect to="/login" />;
+  // }
+
   return (
     <div>
       <Grid

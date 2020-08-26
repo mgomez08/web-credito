@@ -68,10 +68,7 @@ export default function FormRegister() {
   const inputValidation = (e) => {
     const { type, name } = e.target;
     if (name === "ndoc") {
-      setFormValid({
-        ...formValid,
-        [name]: minLengthValidation(e.target, 8),
-      });
+      setFormValid({ ...formValid, [name]: minLengthValidation(e.target, 8) });
     }
     if (type === "tel") {
       setFormValid({
