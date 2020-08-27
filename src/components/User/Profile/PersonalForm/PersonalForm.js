@@ -3,9 +3,8 @@ import {
   Grid,
   FormControl,
   InputLabel,
-  Input,
-  FormHelperText,
   Select,
+  TextField,
   Button,
   Typography,
   Snackbar,
@@ -13,14 +12,13 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
-import {
-  minLengthValidation,
-  emailValidation,
-} from "../../../../utils/formValidation";
 import Alert from "@material-ui/lab/Alert";
 import "./PersonalForm.scss";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { useForm } from "react-hook-form";
 
 export default function PersonalForm() {
+  const { register, errors, handleSubmit } = useForm();
   const [inputs, setInputs] = useState({
     names: "",
     lastname: "",
@@ -41,65 +39,31 @@ export default function PersonalForm() {
     homeaddress: "",
     yearsresidence: "",
   });
-  const [formValid, setFormValid] = useState({
-    names: false,
-    lastname: false,
-    datebirth: false,
-    departbirth: false,
-    citybirth: false,
-    typedoc: false,
-    ndoc: false,
-    age: false,
-    educationallevel: false,
-    profession: false,
-    occupation: false,
-    numpersonsfamilynucleus: false,
-    numpersonsdependents: false,
-    typehousing: false,
-    departresidence: false,
-    cityresidence: false,
-    homeaddress: false,
-    yearsresidence: false,
-  });
-
-  const inputValidation = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-
-    const { type, name } = e.target;
-    console.log(name);
-    if (name === "ndoc") {
-      setFormValid({ ...formValid, [name]: minLengthValidation(e.target, 8) });
-    }
-    if (type === "tel") {
-      setFormValid({
-        ...formValid,
-        [name]: minLengthValidation(e.target, 10),
+  const handleChange = (e) => {
+    if (e.target) {
+      setInputs({
+        ...inputs,
+        [e.target.name]: e.target.value,
       });
-    }
-    if (type === "email") {
-      setFormValid({
-        ...formValid,
-        [name]: emailValidation(e.target),
-      });
-    }
-    if (type === "password") {
-      setFormValid({
-        ...formValid,
-        [name]: minLengthValidation(e.target, 6),
-      });
-    }
-    if (type === "checkbox") {
-      setFormValid({
-        ...formValid,
-        [name]: e.target.checked,
+    } else {
+      const datebirth = "datebirth";
+      setInputs({
+        ...inputs,
+        [datebirth]: e._d,
       });
     }
   };
-
-  const handleDateChange = (date) => {};
+  const onSubmit = (data, e) => {
+    console.log(data);
+    setInputs({
+      ...inputs,
+      data,
+    });
+    e.target.reset();
+  };
 
   return (
-    <form className="personal-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="personal-form">
       <Grid
         container
         direction="row"
@@ -108,145 +72,158 @@ export default function PersonalForm() {
         spacing={4}
       >
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="names">Nombres</InputLabel>
-            <Input
-              name="names"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.names}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Nombres"
+            color="secondary"
+            variant="outlined"
+            fullWidth
+            name="names"
+            onChange={handleChange}
+            defaultValue={inputs.names}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^([a-z ñáéíóú])+$/i,
+                message: "Solo puede ingresar letras en su nombre",
+              },
+            })}
+          />
+          <span> {errors?.names?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="lastname">Apellidos</InputLabel>
-            <Input
-              name="lastname"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.lastname}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Apellidos"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            name="lastname"
+            onChange={handleChange}
+            value={inputs.lastname}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^([a-z ñáéíóú])+$/i,
+                message: "Solo puede ingresar letras en su apellido",
+              },
+            })}
+          />
+          <span> {errors?.lastname?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
           <KeyboardDatePicker
-            className="personal-form__date"
             fullWidth={true}
+            color="secondary"
+            inputVariant="outlined"
             margin="normal"
             name="datebirth"
-            aria-describedby="my-helper-text"
+            autoOk={true}
             label="Fecha de nacimiento"
             format="DD/MM/yyyy"
+            maxDate={new Date()}
             value={inputs.datebirth}
-            onChange={inputValidation}
-            KeyboardButtonProps={{
-              "aria-label": "change date",
-            }}
+            onChange={handleChange}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
           />
-          <FormHelperText id="my-helper-text">
-            Campo Obligatorio.
-          </FormHelperText>
+          <span>{errors?.datebirth?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="depart-birth">
-              Departamento de nacimiento
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="departbirth">
+              Departamento de Nacimiento
             </InputLabel>
             <Select
               native
               name="departbirth"
               value={inputs.departbirth}
-              onChange={inputValidation}
-              inputProps={{
-                id: "depart-birth-required",
-              }}
+              onChange={handleChange}
+              label="Departamento de Nacimiento"
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
               <option value={"Tolima"}>Tolima</option>
               <option value={"Cundinamarca"}>Cundinamarca</option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span>{errors?.departbirth?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
             <InputLabel htmlFor="city-birth">Cuidad de nacimiento</InputLabel>
             <Select
               native
               name="citybirth"
               value={inputs.citybirth}
-              onChange={inputValidation}
-              inputProps={{
-                id: "city-birth-required",
-              }}
+              onChange={handleChange}
+              label="Cuidad de Nacimiento"
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
               <option value={"Espinal"}>Espinal</option>
               <option value={"Girardot"}>Girardot</option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span>{errors?.citybirth?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
             <InputLabel htmlFor="type-doc">Tipo de Documento</InputLabel>
             <Select
               native
               name="typedoc"
               value={inputs.typedoc}
-              onChange={inputValidation}
-              inputProps={{
-                id: "type-doc-required",
-              }}
+              onChange={handleChange}
+              label="Tipo de Documento"
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
               <option value={"CC"}>Cédula de Ciudadanía</option>
               <option value={"CT"}>Cédula de Extranjería</option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span>{errors?.typedoc?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="ndoc">Número de Identificación</InputLabel>
-            <Input
-              type="number"
-              error={false}
-              name="ndoc"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.ndoc}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Número de Identificación"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="ndoc"
+            onChange={handleChange}
+            value={inputs.ndoc}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span>{errors?.ndoc?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="age">Edad</InputLabel>
-            <Input
-              type="number"
-              error={false}
-              name="age"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.age}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Edad"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="age"
+            onChange={handleChange}
+            value={inputs.age}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span>{errors?.age?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
             <InputLabel htmlFor="educational-level">
               Nivel de Estudio
             </InputLabel>
@@ -254,10 +231,11 @@ export default function PersonalForm() {
               native
               name="educationallevel"
               value={inputs.educationallevel}
-              onChange={inputValidation}
-              inputProps={{
-                id: "educational-level-required",
-              }}
+              onChange={handleChange}
+              label="Nivel de Estudio"
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
               <option value={"Bachiller"}>Bachiller</option>
@@ -268,95 +246,94 @@ export default function PersonalForm() {
               <option value={"Magister"}>Magister</option>
               <option value={"Doctorado"}>Doctorado</option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span>{errors?.educationallevel?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="profession">Profesión</InputLabel>
-            <Input
-              name="profession"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.profession}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Profesión"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            name="profession"
+            onChange={handleChange}
+            value={inputs.profession}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span>{errors?.profession?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="occupation">Ocupación</InputLabel>
-            <Input
-              name="occupation"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.occupation}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Ocupación"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            name="occupation"
+            onChange={handleChange}
+            value={inputs.occupation}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span>{errors?.occupation?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="num-persons-family-nucleus">
-              Número de personas de su Núcleo Familiar
-            </InputLabel>
-            <Input
-              type="number"
-              error={false}
-              name="numpersonsfamilynucleus"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.numpersonsfamilynucleus}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Número de personas de su Núcleo Familiar"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="numpersonsfamilynucleus"
+            onChange={handleChange}
+            value={inputs.numpersonsfamilynucleus}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span>{errors?.numpersonsfamilynucleus?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="num-persons-dependents">
-              Número de personas a cargo
-            </InputLabel>
-            <Input
-              type="number"
-              error={false}
-              name="numpersonsdependents"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.numpersonsdependents}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Número de personas a cargo suyo"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="numpersonsdependents"
+            onChange={handleChange}
+            value={inputs.numpersonsdependents}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span>{errors?.numpersonsdependents?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="type-housing">Tipo de vivienda</InputLabel>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="type-housing">Tipo de Vivienda</InputLabel>
             <Select
               native
               name="typehousing"
               value={inputs.typehousing}
-              onChange={inputValidation}
-              inputProps={{
-                id: "type-housing-required",
-              }}
+              onChange={handleChange}
+              label="Tipo de Vivienda"
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
               <option value={"Patrimonio"}>Patrimonio</option>
               <option value={"Propia"}>Propia</option>
               <option value={"Arriendo"}>Arriendo</option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span>{errors?.typehousing?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
             <InputLabel htmlFor="depart-residence">
               Departamento de residencia
             </InputLabel>
@@ -364,20 +341,21 @@ export default function PersonalForm() {
               native
               name="departresidence"
               value={inputs.departresidence}
-              onChange={inputValidation}
-              inputProps={{
-                id: "depart-birth-required",
-              }}
+              onChange={handleChange}
+              label="Departamento de Residencia"
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
               <option value={"Tolima"}>Tolima</option>
               <option value={"Cundinamarca"}>Cundinamarca</option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span>{errors?.departresidence?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
             <InputLabel htmlFor="city-residence">
               Cuidad de residencia
             </InputLabel>
@@ -385,51 +363,60 @@ export default function PersonalForm() {
               native
               name="cityresidence"
               value={inputs.cityresidence}
-              onChange={inputValidation}
-              inputProps={{
-                id: "city-residence-required",
-              }}
+              onChange={handleChange}
+              label="Cuidad de Residencia"
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
               <option value={"Espinal"}>Espinal</option>
               <option value={"Girardot"}>Girardot</option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span>{errors?.cityresidence?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="home-address">
-              Dirección de vivienda
-            </InputLabel>
-            <Input
-              name="homeaddress"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.homeaddress}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Dirección de Residencia"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            name="homeaddress"
+            onChange={handleChange}
+            value={inputs.homeaddress}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span>{errors?.homeaddress?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="years-residence">
-              Años en la dirección actual
-            </InputLabel>
-            <Input
-              type="number"
-              error={false}
-              name="yearsresidence"
-              aria-describedby="my-helper-text"
-              onChange={inputValidation}
-              value={inputs.yearsresidence}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Años en la dirección actual"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="yearsresidence"
+            onChange={handleChange}
+            value={inputs.yearsresidence}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span>{errors?.yearsresidence?.message}</span>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            type="submit"
+            size="large"
+            variant="contained"
+            color="primary"
+            endIcon={<ExitToAppIcon />}
+          >
+            Registrarme
+          </Button>
         </Grid>
       </Grid>
     </form>

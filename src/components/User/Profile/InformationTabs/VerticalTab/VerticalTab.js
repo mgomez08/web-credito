@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Tabs, Tab } from "@material-ui/core";
+import { Tabs, Tab, Typography, LinearProgress, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "./VerticalTab.scss";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -21,6 +21,27 @@ function TabPanel(props) {
     >
       {value === index && <div>{children}</div>}
     </div>
+  );
+}
+
+function LinearProgressWithLabel(props) {
+  const classes = useStyles();
+  return (
+    <Box display="flex" alignItems="center" className={classes.progressForm}>
+      <Box width="100%" mr={1}>
+        <LinearProgress
+          className={classes.bar}
+          color="secondary"
+          variant="determinate"
+          {...props}
+        />
+      </Box>
+      <Box minWidth={35}>
+        <Typography variant="body2" color="textSecondary">{`${Math.round(
+          props.value
+        )}%`}</Typography>
+      </Box>
+    </Box>
   );
 }
 
@@ -48,10 +69,31 @@ const useStyles = makeStyles((theme) => ({
     borderRight: `1px solid ${theme.palette.divider}`,
     overflow: "visible",
   },
+  progressForm: {
+    paddingLeft: "30px",
+    paddingRight: "24px",
+    paddingBottom: "15px",
+  },
+  bar: {
+    height: "12px",
+    borderRadius: "5px",
+  },
 }));
 export default function VerticalTab() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [progress, setProgress] = React.useState(10);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) =>
+        prevProgress >= 100 ? 10 : prevProgress + 10
+      );
+    }, 800);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -76,9 +118,11 @@ export default function VerticalTab() {
         />
       </Tabs>
       <TabPanel value={value} index={0}>
+        <LinearProgressWithLabel value={progress} />
         <PersonalForm />
       </TabPanel>
       <TabPanel value={value} index={1}>
+        <LinearProgressWithLabel value={progress} />
         <FinancialForm />
       </TabPanel>
     </div>

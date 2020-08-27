@@ -31,8 +31,8 @@ export default function Profile() {
         alignItems="center"
         className="profile"
       >
-        <Grid item xs={1} />
-        <Grid item xs={10}>
+        <Grid item xs={false} md={1} />
+        <Grid item xs={12} md={10}>
           <Typography color="initial" variant="h2" align="center">
             Edita tu información
           </Typography>
@@ -47,7 +47,7 @@ export default function Profile() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={1} />
+        <Grid item xs={false} md={1} />
       </Grid>
     </div>
   );

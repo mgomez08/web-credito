@@ -9,6 +9,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: "auto",
+    paddingLeft: "15px",
+    paddingRight: "15px",
   },
 }));
 export default function InformationTabs() {
