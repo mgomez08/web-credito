@@ -6,23 +6,56 @@ import {
   Input,
   FormHelperText,
   Select,
+  TextField,
   Button,
   Typography,
   Snackbar,
 } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import { useForm } from "react-hook-form";
 import "./FinancialForm.scss";
 
 export default function FinancialForm() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const { register, errors, handleSubmit } = useForm();
+  const [inputs, setInputs] = useState({
+    yearsexperience: "",
+    datecurrentjob: null,
+    workposition: "",
+    typesalary: "",
+    typecontract: "",
+    monthlysalary: "",
+    monthlyexpenditure: "",
+  });
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleChange = (e) => {
+    try {
+      if (e.target) {
+        setInputs({
+          ...inputs,
+          [e.target.name]: e.target.value,
+        });
+      } else {
+        const datecurrentjob = "datecurrentjob";
+        setInputs({
+          ...inputs,
+          [datecurrentjob]: e._d,
+        });
+      }
+    } catch (error) {}
+  };
+  const onSubmit = (data, e) => {
+    console.log(data);
+    setInputs({
+      ...inputs,
+      data,
+    });
+    e.target.reset();
   };
 
   return (
-    <form className="financial-form">
+    <form onSubmit={handleSubmit(onSubmit)} className="financial-form">
       <Grid
         container
         direction="row"
@@ -31,138 +64,158 @@ export default function FinancialForm() {
         spacing={4}
       >
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="years-experience">
-              Años de experiencia en el trabajo actual
-            </InputLabel>
-            <Input
-              type="number"
-              error={false}
-              name="years-experience"
-              aria-describedby="my-helper-text"
-              //   onChange={inputValidation}
-              //   value={inputs.ndoc}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Años de experiencia en el trabajo actual"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="yearsexperience"
+            onChange={handleChange}
+            defaultValue={inputs.yearsexperience}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span> {errors?.yearsexperience?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
           <KeyboardDatePicker
             fullWidth={true}
+            color="secondary"
+            inputVariant="outlined"
             margin="normal"
-            id="date-picker-dialog"
-            aria-describedby="my-helper-text"
-            label="Fecha de ingreso de trabajo actual"
+            name="datecurrentjob"
+            mask="__/__/____"
+            autoOk={true}
+            label="Fecha de nacimiento"
+            openTo="year"
+            invalidDateMessage="Formato de fecha Invalido"
+            allowKeyboardControl={true}
+            maxDateMessage="La fecha ingresada no es valida"
             format="DD/MM/yyyy"
-            value={selectedDate}
-            onChange={handleDateChange}
-            KeyboardButtonProps={{
-              "aria-label": "change date",
-            }}
+            maxDate={new Date()}
+            value={inputs.datecurrentjob}
+            onChange={handleChange}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
           />
-          <FormHelperText id="my-helper-text">
-            Campo Obligatorio.
-          </FormHelperText>
+          <span>{errors?.datecurrentjob?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="work-position">
-              Cargo que desempeña en su trabajo
-            </InputLabel>
-            <Input
-              name="work-position"
-              aria-describedby="my-helper-text"
-              //onChange={inputValidation}
-              //value={inputs.names}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            color="secondary"
+            variant="outlined"
+            fullWidth
+            name="workposition"
+            label="Cargo que desempeña en su trabajo"
+            onChange={handleChange}
+            defaultValue={inputs.workposition}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span> {errors?.workposition?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="type-salary">Tipo de Salario</InputLabel>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="typesalary">Tipo de Salario</InputLabel>
             <Select
               native
-              name="type-salary"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
-              inputProps={{
-                id: "type-salary-required",
-              }}
+              name="typesalary"
+              label="Tipo de Salario"
+              onChange={handleChange}
+              defaultValue={inputs.typesalary}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
-              <option value={"CC"}>Quincenal</option>
-              <option value={"CT"}>Mensual</option>
-              <option value={"CT"}>Por horas</option>
+              <option value={"Quincenal"}>Quincenal</option>
+              <option value={"Mensual"}>Mensual</option>
+              <option value={"Por horas"}>Por horas</option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span> {errors?.typesalary?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="type-contract">Tipo de Contrato</InputLabel>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="typecontract">Tipo de Contrato</InputLabel>
             <Select
               native
-              name="type-contract"
-              //   value={inputs.typedoc}
-              //   onChange={inputValidation}
-              inputProps={{
-                id: "type-contract-required",
-              }}
+              name="typecontract"
+              label="Tipo de Contrato"
+              onChange={handleChange}
+              defaultValue={inputs.typecontract}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
             >
               <option aria-label="None" />
-              <option value={"CC"}>Definido</option>
-              <option value={"CT"}>Indefinido</option>
-              <option value={"CT"}>Prestación de Servicios</option>
+              <option value={"Definido"}>Definido</option>
+              <option value={"Indefinido"}>Indefinido</option>
+              <option value={"Prestación de Servicios"}>
+                Prestación de Servicios
+              </option>
             </Select>
-            <FormHelperText>Campo Obligatorio.</FormHelperText>
           </FormControl>
+          <span> {errors?.typecontract?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="monthly -salary">
-              Ingreso mensual base
-            </InputLabel>
-            <Input
-              type="number"
-              error={false}
-              name="monthly -salary"
-              aria-describedby="my-helper-text"
-              startAdornment={
+          <TextField
+            label="Ingreso mensual base"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="monthlysalary"
+            InputProps={{
+              startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
-              }
-              //   onChange={inputValidation}
-              //   value={inputs.ndoc}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+              ),
+            }}
+            onChange={handleChange}
+            defaultValue={inputs.monthlysalary}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span> {errors?.monthlysalary?.message}</span>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="monthly expenditure">
-              Promedio egresos mensuales{" "}
-            </InputLabel>
-            <Input
-              type="number"
-              error={false}
-              name="monthly-expenditure"
-              aria-describedby="my-helper-text"
-              startAdornment={
+          <TextField
+            label="Promedio egresos mensuales"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="monthlyexpenditure"
+            InputProps={{
+              startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
-              }
-              //   onChange={inputValidation}
-              //   value={inputs.ndoc}
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+              ),
+            }}
+            onChange={handleChange}
+            defaultValue={inputs.monthlyexpenditure}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+          />
+          <span> {errors?.monthlyexpenditure?.message}</span>
+        </Grid>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item xs={12}>
+            <Button
+              type="submit"
+              size="large"
+              variant="contained"
+              color="primary"
+              endIcon={<ExitToAppIcon />}
+            >
+              Guardar información
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </form>
