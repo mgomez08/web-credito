@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import {
   Grid,
-  FormControl,
-  InputLabel,
-  Input,
-  FormHelperText,
+  TextField,
   Button,
   Typography,
   Snackbar,
@@ -18,29 +15,23 @@ import "./FormLogin.scss";
 import { signInApi } from "../../../api/user";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../utils/constants";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 export default function FormLogin() {
+  const { register, errors, handleSubmit } = useForm();
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
+  const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const changeForm = (e) => {
+  const handleChange = (e) => {
     setInputs({
       ...inputs,
       [e.target.name]: e.target.value,
     });
-  };
-  const [open, setOpen] = React.useState(false);
-  const [message, setMessage] = useState("");
-  const [typemessage, setTypeMessage] = useState("success");
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -49,26 +40,35 @@ export default function FormLogin() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
-  const login = async (e) => {
+  const handleClick = (typemessage) => {
+    if (typemessage === "error") {
+      setOpenError(true);
+    } else {
+      setOpenSuccess(true);
+    }
+  };
+  const handleClose = () => {
+    setOpenError(false);
+    setOpenSuccess(false);
+  };
+  const onSubmit = async (data, e) => {
     e.preventDefault();
     const result = await signInApi(inputs);
-
     if (result.message) {
-      setTypeMessage("error");
       setMessage(result.message);
+      handleClick("error");
     } else {
       const { accessToken, refreshToken } = result;
       localStorage.setItem(ACCESS_TOKEN, accessToken);
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
-      setTypeMessage("success");
       setMessage("Login correcto, redirigiendo");
+      handleClick("success");
       window.location.href = "/user";
     }
   };
 
   return (
-    <form onChange={changeForm} onSubmit={login}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Grid
         container
         direction="row"
@@ -78,43 +78,66 @@ export default function FormLogin() {
         className="form-login"
       >
         <Grid item xs={12}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="email">Correo Electrónico </InputLabel>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              aria-describedby="my-helper-text"
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+          <TextField
+            label="Correo Electrónico"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="email"
+            name="email"
+            onChange={handleChange}
+            defaultValue={inputs.email}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
+                message: "El correo electrónico ingresado no es valido",
+              },
+            })}
+          />
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.email?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="pwd">Contraseña</InputLabel>
-            <Input
-              id="pwd"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              aria-describedby="my-helper-text"
-              endAdornment={
+          <TextField
+            label="Contraseña"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            name="password"
+            type={showPassword ? "text" : "password"}
+            onChange={handleChange}
+            defaultValue={inputs.password}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+            })}
+            InputProps={{
+              endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
                   >
                     {showPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
                 </InputAdornment>
-              }
-            />
-            <FormHelperText id="my-helper-text">
-              Campo Obligatorio.
-            </FormHelperText>
-          </FormControl>
+              ),
+            }}
+          />
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.password?.message}
+          </Typography>
         </Grid>
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item xs={12}>
@@ -122,7 +145,6 @@ export default function FormLogin() {
               size="large"
               variant="contained"
               color="primary"
-              onClick={handleClick}
               type="submit"
             >
               Iniciar Sesión
@@ -137,11 +159,21 @@ export default function FormLogin() {
         </Grid>
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          open={open}
+          open={openSuccess}
           autoHideDuration={4000}
           onClose={handleClose}
         >
-          <Alert onClose={handleClose} variant="filled" severity={typemessage}>
+          <Alert onClose={handleClose} variant="filled" severity="success">
+            {message}
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={openError}
+          autoHideDuration={4000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} variant="filled" severity="error">
             {message}
           </Alert>
         </Snackbar>

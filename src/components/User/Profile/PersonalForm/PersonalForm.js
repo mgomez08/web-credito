@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 
 export default function PersonalForm() {
   const { register, errors, handleSubmit } = useForm();
+  const [open, setOpen] = React.useState(false);
   const [inputs, setInputs] = useState({
     names: "",
     lastname: "",
@@ -30,6 +31,7 @@ export default function PersonalForm() {
     citybirth: "",
     typedoc: "",
     ndoc: "",
+    tel: "",
     age: "",
     educationallevel: "",
     profession: "",
@@ -58,13 +60,20 @@ export default function PersonalForm() {
       }
     } catch (error) {}
   };
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const onSubmit = (data, e) => {
     console.log(data);
     setInputs({
       ...inputs,
       data,
     });
-    e.target.reset();
+    handleClick();
   };
 
   return (
@@ -93,7 +102,14 @@ export default function PersonalForm() {
               },
             })}
           />
-          <span> {errors?.names?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.names?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -112,7 +128,14 @@ export default function PersonalForm() {
               },
             })}
           />
-          <span> {errors?.lastname?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.lastname?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <KeyboardDatePicker
@@ -136,7 +159,14 @@ export default function PersonalForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span>{errors?.datebirth?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.datebirth?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -163,7 +193,14 @@ export default function PersonalForm() {
               })}
             </Select>
           </FormControl>
-          <span>{errors?.departbirth?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.departbirth?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -190,7 +227,14 @@ export default function PersonalForm() {
               )}
             </Select>
           </FormControl>
-          <span>{errors?.citybirth?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.citybirth?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -210,7 +254,14 @@ export default function PersonalForm() {
               <option value={"CT"}>Cédula de Extranjería</option>
             </Select>
           </FormControl>
-          <span>{errors?.typedoc?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.typedoc?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -224,9 +275,48 @@ export default function PersonalForm() {
             defaultValue={inputs.ndoc}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              minLength: {
+                value: 8,
+                message:
+                  "El número de identificación debe tener mínimo 8 digitos",
+              },
             })}
           />
-          <span>{errors?.ndoc?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.ndoc?.message}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <TextField
+            label=" Celular"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            type="number"
+            name="tel"
+            onChange={handleChange}
+            defaultValue={inputs.tel}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+              minLength: {
+                value: 10,
+                message: "El número de celular debe tener mínimo 10 digitos",
+              },
+            })}
+          />
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.tel?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -242,7 +332,14 @@ export default function PersonalForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span>{errors?.age?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.age?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -269,7 +366,14 @@ export default function PersonalForm() {
               <option value={"Doctorado"}>Doctorado</option>
             </Select>
           </FormControl>
-          <span>{errors?.educationallevel?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.educationallevel?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -282,9 +386,20 @@ export default function PersonalForm() {
             defaultValue={inputs.profession}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^([a-z ñáéíóú])+$/i,
+                message: "Solo puede ingresar letras en su profesión",
+              },
             })}
           />
-          <span>{errors?.profession?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.profession?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -297,9 +412,20 @@ export default function PersonalForm() {
             defaultValue={inputs.occupation}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^([a-z ñáéíóú])+$/i,
+                message: "Solo puede ingresar letras en su ocupación",
+              },
             })}
           />
-          <span>{errors?.occupation?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.occupation?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -315,7 +441,14 @@ export default function PersonalForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span>{errors?.numpersonsfamilynucleus?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.numpersonsfamilynucleus?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -331,7 +464,14 @@ export default function PersonalForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span>{errors?.numpersonsdependents?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.numpersonsdependents?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -352,7 +492,14 @@ export default function PersonalForm() {
               <option value={"Arriendo"}>Arriendo</option>
             </Select>
           </FormControl>
-          <span>{errors?.typehousing?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.typehousing?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -370,11 +517,23 @@ export default function PersonalForm() {
               })}
             >
               <option aria-label="None" />
-              <option value={"Tolima"}>Tolima</option>
-              <option value={"Cundinamarca"}>Cundinamarca</option>
+              {Departments().map((Departament) => {
+                return (
+                  <option key={Departament.id} value={Departament.name}>
+                    {Departament.name}
+                  </option>
+                );
+              })}
             </Select>
           </FormControl>
-          <span>{errors?.departresidence?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.departresidence?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -392,11 +551,25 @@ export default function PersonalForm() {
               })}
             >
               <option aria-label="None" />
-              <option value={"Espinal"}>Espinal</option>
-              <option value={"Girardot"}>Girardot</option>
+              {Citys(
+                getIdDepartment(inputs.departresidence, Departments())
+              ).map((City) => {
+                return (
+                  <option key={City.id} value={City.name}>
+                    {City.name}
+                  </option>
+                );
+              })}
             </Select>
           </FormControl>
-          <span>{errors?.cityresidence?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.cityresidence?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -411,7 +584,14 @@ export default function PersonalForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span>{errors?.homeaddress?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.homeaddress?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -427,7 +607,14 @@ export default function PersonalForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span>{errors?.yearsresidence?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.yearsresidence?.message}
+          </Typography>
         </Grid>
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item xs={12}>
@@ -438,10 +625,20 @@ export default function PersonalForm() {
               color="primary"
               endIcon={<ExitToAppIcon />}
             >
-              Guardar información
+              Guardar información personal
             </Button>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={open}
+          autoHideDuration={4000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} variant="filled" severity="success">
+            Información personal guardada.
+          </Alert>
+        </Snackbar>
       </Grid>
     </form>
   );

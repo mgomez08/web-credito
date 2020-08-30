@@ -18,9 +18,9 @@ export default function Profile() {
     },
   }));
   const classes = useStyles();
-  // if (!getAccessTokenApi()) {
-  //   return <Redirect to="/login" />;
-  // }
+  if (!getAccessTokenApi()) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <div>

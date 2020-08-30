@@ -3,14 +3,13 @@ import {
   Grid,
   FormControl,
   InputLabel,
-  Input,
-  FormHelperText,
   Select,
   TextField,
   Button,
   Typography,
   Snackbar,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -19,6 +18,7 @@ import "./FinancialForm.scss";
 
 export default function FinancialForm() {
   const { register, errors, handleSubmit } = useForm();
+  const [open, setOpen] = React.useState(false);
   const [inputs, setInputs] = useState({
     yearsexperience: "",
     datecurrentjob: null,
@@ -45,13 +45,21 @@ export default function FinancialForm() {
       }
     } catch (error) {}
   };
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const onSubmit = (data, e) => {
     console.log(data);
     setInputs({
       ...inputs,
       data,
     });
-    e.target.reset();
+
+    handleClick();
   };
 
   return (
@@ -77,7 +85,14 @@ export default function FinancialForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span> {errors?.yearsexperience?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.yearsexperience?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <KeyboardDatePicker
@@ -88,7 +103,7 @@ export default function FinancialForm() {
             name="datecurrentjob"
             mask="__/__/____"
             autoOk={true}
-            label="Fecha de nacimiento"
+            label="Fecha de ingreso a su trabajo actual"
             openTo="year"
             invalidDateMessage="Formato de fecha Invalido"
             allowKeyboardControl={true}
@@ -101,7 +116,14 @@ export default function FinancialForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span>{errors?.datecurrentjob?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.datecurrentjob?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -114,9 +136,20 @@ export default function FinancialForm() {
             defaultValue={inputs.workposition}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^([a-z ñáéíóú])+$/i,
+                message: "Solo puede ingresar letras en el cargo que desempeña",
+              },
             })}
           />
-          <span> {errors?.workposition?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.workposition?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -137,7 +170,14 @@ export default function FinancialForm() {
               <option value={"Por horas"}>Por horas</option>
             </Select>
           </FormControl>
-          <span> {errors?.typesalary?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.typesalary?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
@@ -160,7 +200,14 @@ export default function FinancialForm() {
               </option>
             </Select>
           </FormControl>
-          <span> {errors?.typecontract?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.typecontract?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -181,7 +228,14 @@ export default function FinancialForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span> {errors?.monthlysalary?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.monthlysalary?.message}
+          </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
@@ -202,7 +256,14 @@ export default function FinancialForm() {
               required: { value: true, message: "Campo obligatorio" },
             })}
           />
-          <span> {errors?.monthlyexpenditure?.message}</span>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.monthlyexpenditure?.message}
+          </Typography>
         </Grid>
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item xs={12}>
@@ -217,6 +278,16 @@ export default function FinancialForm() {
             </Button>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={open}
+          autoHideDuration={4000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} variant="filled" severity="success">
+            Información personal guardada.
+          </Alert>
+        </Snackbar>
       </Grid>
     </form>
   );
