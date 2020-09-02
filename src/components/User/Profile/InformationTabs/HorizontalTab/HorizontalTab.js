@@ -68,20 +68,31 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
   },
 }));
-export default function HorizontalTab() {
+
+export default function HorizontalTab(props) {
+  const {
+    userPersonalData,
+    setUserPersonalData,
+    userFinancialData,
+    setUserFinancialData,
+    onSubmitPersonal,
+    onSubmitFinancial,
+    open,
+    setOpen,
+  } = props;
   const [value, setValue] = React.useState(0);
   const [progress, setProgress] = React.useState(10);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress >= 100 ? 10 : prevProgress + 10
-      );
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setProgress((prevProgress) =>
+  //       prevProgress >= 100 ? 10 : prevProgress + 10
+  //     );
+  //   }, 800);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -94,7 +105,6 @@ export default function HorizontalTab() {
         indicatorColor="secondary"
         textColor="secondary"
         variant="fullWidth"
-        aria-label="full width tabs example"
       >
         <Tab icon={<AccountCircleIcon />} label="Personal" {...a11yProps(0)} />
         <Tab
@@ -105,11 +115,23 @@ export default function HorizontalTab() {
       </Tabs>
       <TabPanel value={value} index={0}>
         <LinearProgressWithLabel value={progress} />
-        <PersonalForm />
+        <PersonalForm
+          userPersonalData={userPersonalData}
+          setUserPersonalData={setUserPersonalData}
+          onSubmitPersonal={onSubmitPersonal}
+          open={open}
+          setOpen={setOpen}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <LinearProgressWithLabel value={progress} />
-        <FinancialForm />
+        <FinancialForm
+          userFinancialData={userFinancialData}
+          setUserFinancialData={setUserFinancialData}
+          onSubmitFinancial={onSubmitFinancial}
+          open={open}
+          setOpen={setOpen}
+        />
       </TabPanel>
     </>
   );

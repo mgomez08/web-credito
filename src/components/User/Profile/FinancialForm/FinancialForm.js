@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Grid,
   FormControl,
@@ -16,54 +16,39 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { useForm } from "react-hook-form";
 import "./FinancialForm.scss";
 
-export default function FinancialForm() {
+export default function FinancialForm(props) {
+  const {
+    userFinancialData,
+    setUserFinancialData,
+    onSubmitFinancial,
+    open,
+    setOpen,
+  } = props;
   const { register, errors, handleSubmit } = useForm();
-  const [open, setOpen] = React.useState(false);
-  const [inputs, setInputs] = useState({
-    yearsexperience: "",
-    datecurrentjob: null,
-    workposition: "",
-    typesalary: "",
-    typecontract: "",
-    monthlysalary: "",
-    monthlyexpenditure: "",
-  });
 
   const handleChange = (e) => {
     try {
       if (e.target) {
-        setInputs({
-          ...inputs,
+        setUserFinancialData({
+          ...userFinancialData,
           [e.target.name]: e.target.value,
         });
       } else {
         const datecurrentjob = "datecurrentjob";
-        setInputs({
-          ...inputs,
+        setUserFinancialData({
+          ...userFinancialData,
           [datecurrentjob]: e._d,
         });
       }
     } catch (error) {}
   };
-  const handleClick = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
   };
-  const onSubmit = (data, e) => {
-    console.log(data);
-    setInputs({
-      ...inputs,
-      data,
-    });
-
-    handleClick();
-  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="financial-form">
+    <form onSubmit={handleSubmit(onSubmitFinancial)} className="financial-form">
       <Grid
         container
         direction="row"
@@ -80,7 +65,7 @@ export default function FinancialForm() {
             type="number"
             name="yearsexperience"
             onChange={handleChange}
-            defaultValue={inputs.yearsexperience}
+            defaultValue={userFinancialData.yearsexperience}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
             })}
@@ -110,7 +95,7 @@ export default function FinancialForm() {
             maxDateMessage="La fecha ingresada no es valida"
             format="DD/MM/yyyy"
             maxDate={new Date()}
-            value={inputs.datecurrentjob}
+            value={userFinancialData.datecurrentjob}
             onChange={handleChange}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
@@ -133,7 +118,7 @@ export default function FinancialForm() {
             name="workposition"
             label="Cargo que desempeña en su trabajo"
             onChange={handleChange}
-            defaultValue={inputs.workposition}
+            defaultValue={userFinancialData.workposition}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
               pattern: {
@@ -159,7 +144,7 @@ export default function FinancialForm() {
               name="typesalary"
               label="Tipo de Salario"
               onChange={handleChange}
-              defaultValue={inputs.typesalary}
+              defaultValue={userFinancialData.typesalary}
               inputRef={register({
                 required: { value: true, message: "Campo obligatorio" },
               })}
@@ -187,7 +172,7 @@ export default function FinancialForm() {
               name="typecontract"
               label="Tipo de Contrato"
               onChange={handleChange}
-              defaultValue={inputs.typecontract}
+              defaultValue={userFinancialData.typecontract}
               inputRef={register({
                 required: { value: true, message: "Campo obligatorio" },
               })}
@@ -223,7 +208,7 @@ export default function FinancialForm() {
               ),
             }}
             onChange={handleChange}
-            defaultValue={inputs.monthlysalary}
+            defaultValue={userFinancialData.monthlysalary}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
             })}
@@ -251,7 +236,7 @@ export default function FinancialForm() {
               ),
             }}
             onChange={handleChange}
-            defaultValue={inputs.monthlyexpenditure}
+            defaultValue={userFinancialData.monthlyexpenditure}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
             })}
@@ -274,18 +259,18 @@ export default function FinancialForm() {
               color="primary"
               endIcon={<ExitToAppIcon />}
             >
-              Guardar información
+              Guardar información Financiera
             </Button>
           </Grid>
         </Grid>
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           open={open}
-          autoHideDuration={4000}
+          autoHideDuration={3000}
           onClose={handleClose}
         >
           <Alert onClose={handleClose} variant="filled" severity="success">
-            Información personal guardada.
+            Información Financiera Guardada.
           </Alert>
         </Snackbar>
       </Grid>

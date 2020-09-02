@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Grid,
   FormControl,
@@ -20,64 +20,39 @@ import {
 } from "../../../../utils/FormObjects";
 import { useForm } from "react-hook-form";
 
-export default function PersonalForm() {
+export default function PersonalForm(props) {
+  const {
+    userPersonalData,
+    setUserPersonalData,
+    onSubmitPersonal,
+    open,
+    setOpen,
+  } = props;
   const { register, errors, handleSubmit } = useForm();
-  const [open, setOpen] = React.useState(false);
-  const [inputs, setInputs] = useState({
-    names: "",
-    lastname: "",
-    datebirth: null,
-    departbirth: "",
-    citybirth: "",
-    typedoc: "",
-    ndoc: "",
-    tel: "",
-    age: "",
-    educationallevel: "",
-    profession: "",
-    occupation: "",
-    numpersonsfamilynucleus: "",
-    numpersonsdependents: "",
-    typehousing: "",
-    departresidence: "",
-    cityresidence: "",
-    homeaddress: "",
-    yearsresidence: "",
-  });
+
   const handleChange = (e) => {
     try {
       if (e.target) {
-        setInputs({
-          ...inputs,
+        setUserPersonalData({
+          ...userPersonalData,
           [e.target.name]: e.target.value,
         });
       } else {
         const datebirth = "datebirth";
-        setInputs({
-          ...inputs,
+        setUserPersonalData({
+          ...userPersonalData,
           [datebirth]: e._d,
         });
       }
     } catch (error) {}
   };
-  const handleClick = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
   };
-  const onSubmit = (data, e) => {
-    console.log(data);
-    setInputs({
-      ...inputs,
-      data,
-    });
-    handleClick();
-  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="personal-form">
+    <form onSubmit={handleSubmit(onSubmitPersonal)} className="personal-form">
       <Grid
         container
         direction="row"
@@ -93,7 +68,7 @@ export default function PersonalForm() {
             fullWidth
             name="names"
             onChange={handleChange}
-            defaultValue={inputs.names}
+            defaultValue={userPersonalData.names}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
               pattern: {
@@ -119,7 +94,7 @@ export default function PersonalForm() {
             fullWidth
             name="lastname"
             onChange={handleChange}
-            defaultValue={inputs.lastname}
+            defaultValue={userPersonalData.lastname}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
               pattern: {
@@ -153,7 +128,7 @@ export default function PersonalForm() {
             maxDateMessage="La fecha ingresada no es valida"
             format="DD/MM/yyyy"
             maxDate={new Date()}
-            value={inputs.datebirth}
+            value={userPersonalData.datebirth}
             onChange={handleChange}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
@@ -176,7 +151,7 @@ export default function PersonalForm() {
             <Select
               native
               name="departbirth"
-              defaultValue={inputs.departbirth}
+              defaultValue={userPersonalData.departbirth}
               onChange={handleChange}
               label="Departamento de Nacimiento"
               inputRef={register({
@@ -208,7 +183,7 @@ export default function PersonalForm() {
             <Select
               native
               name="citybirth"
-              defaultValue={inputs.citybirth}
+              defaultValue={userPersonalData.citybirth}
               onChange={handleChange}
               label="Cuidad de Nacimiento"
               inputRef={register({
@@ -216,15 +191,15 @@ export default function PersonalForm() {
               })}
             >
               <option aria-label="None" />
-              {Citys(getIdDepartment(inputs.departbirth, Departments())).map(
-                (City) => {
-                  return (
-                    <option key={City.id} value={City.name}>
-                      {City.name}
-                    </option>
-                  );
-                }
-              )}
+              {Citys(
+                getIdDepartment(userPersonalData.departbirth, Departments())
+              ).map((City) => {
+                return (
+                  <option key={City.id} value={City.name}>
+                    {City.name}
+                  </option>
+                );
+              })}
             </Select>
           </FormControl>
           <Typography
@@ -242,7 +217,7 @@ export default function PersonalForm() {
             <Select
               native
               name="typedoc"
-              defaultValue={inputs.typedoc}
+              defaultValue={userPersonalData.typedoc}
               onChange={handleChange}
               label="Tipo de Documento"
               inputRef={register({
@@ -272,7 +247,7 @@ export default function PersonalForm() {
             type="number"
             name="ndoc"
             onChange={handleChange}
-            defaultValue={inputs.ndoc}
+            defaultValue={userPersonalData.ndoc}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
               minLength: {
@@ -300,7 +275,7 @@ export default function PersonalForm() {
             type="number"
             name="tel"
             onChange={handleChange}
-            defaultValue={inputs.tel}
+            defaultValue={userPersonalData.tel}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
               minLength: {
@@ -327,7 +302,7 @@ export default function PersonalForm() {
             type="number"
             name="age"
             onChange={handleChange}
-            defaultValue={inputs.age}
+            defaultValue={userPersonalData.age}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
             })}
@@ -349,7 +324,7 @@ export default function PersonalForm() {
             <Select
               native
               name="educationallevel"
-              defaultValue={inputs.educationallevel}
+              defaultValue={userPersonalData.educationallevel}
               onChange={handleChange}
               label="Nivel de Estudio"
               inputRef={register({
@@ -383,7 +358,7 @@ export default function PersonalForm() {
             fullWidth
             name="profession"
             onChange={handleChange}
-            defaultValue={inputs.profession}
+            defaultValue={userPersonalData.profession}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
               pattern: {
@@ -409,7 +384,7 @@ export default function PersonalForm() {
             fullWidth
             name="occupation"
             onChange={handleChange}
-            defaultValue={inputs.occupation}
+            defaultValue={userPersonalData.occupation}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
               pattern: {
@@ -436,7 +411,7 @@ export default function PersonalForm() {
             type="number"
             name="numpersonsfamilynucleus"
             onChange={handleChange}
-            defaultValue={inputs.numpersonsfamilynucleus}
+            defaultValue={userPersonalData.numpersonsfamilynucleus}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
             })}
@@ -459,7 +434,7 @@ export default function PersonalForm() {
             type="number"
             name="numpersonsdependents"
             onChange={handleChange}
-            defaultValue={inputs.numpersonsdependents}
+            defaultValue={userPersonalData.numpersonsdependents}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
             })}
@@ -479,7 +454,7 @@ export default function PersonalForm() {
             <Select
               native
               name="typehousing"
-              defaultValue={inputs.typehousing}
+              defaultValue={userPersonalData.typehousing}
               onChange={handleChange}
               label="Tipo de Vivienda"
               inputRef={register({
@@ -509,7 +484,7 @@ export default function PersonalForm() {
             <Select
               native
               name="departresidence"
-              defaultValue={inputs.departresidence}
+              defaultValue={userPersonalData.departresidence}
               onChange={handleChange}
               label="Departamento de Residencia"
               inputRef={register({
@@ -543,7 +518,7 @@ export default function PersonalForm() {
             <Select
               native
               name="cityresidence"
-              defaultValue={inputs.cityresidence}
+              defaultValue={userPersonalData.cityresidence}
               onChange={handleChange}
               label="Cuidad de Residencia"
               inputRef={register({
@@ -552,7 +527,7 @@ export default function PersonalForm() {
             >
               <option aria-label="None" />
               {Citys(
-                getIdDepartment(inputs.departresidence, Departments())
+                getIdDepartment(userPersonalData.departresidence, Departments())
               ).map((City) => {
                 return (
                   <option key={City.id} value={City.name}>
@@ -579,7 +554,7 @@ export default function PersonalForm() {
             fullWidth
             name="homeaddress"
             onChange={handleChange}
-            defaultValue={inputs.homeaddress}
+            defaultValue={userPersonalData.homeaddress}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
             })}
@@ -602,7 +577,7 @@ export default function PersonalForm() {
             type="number"
             name="yearsresidence"
             onChange={handleChange}
-            defaultValue={inputs.yearsresidence}
+            defaultValue={userPersonalData.yearsresidence}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
             })}
@@ -625,18 +600,18 @@ export default function PersonalForm() {
               color="primary"
               endIcon={<ExitToAppIcon />}
             >
-              Guardar información personal
+              Guardar Información Personal
             </Button>
           </Grid>
         </Grid>
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           open={open}
-          autoHideDuration={4000}
+          autoHideDuration={3000}
           onClose={handleClose}
         >
           <Alert onClose={handleClose} variant="filled" severity="success">
-            Información personal guardada.
+            Información Personal Guardada.
           </Alert>
         </Snackbar>
       </Grid>

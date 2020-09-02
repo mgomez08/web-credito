@@ -79,21 +79,31 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
   },
 }));
-export default function VerticalTab() {
+export default function VerticalTab(props) {
   const classes = useStyles();
+  const {
+    userPersonalData,
+    setUserPersonalData,
+    userFinancialData,
+    setUserFinancialData,
+    onSubmitPersonal,
+    onSubmitFinancial,
+    open,
+    setOpen,
+  } = props;
   const [value, setValue] = React.useState(0);
   const [progress, setProgress] = React.useState(10);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress >= 100 ? 10 : prevProgress + 10
-      );
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setProgress((prevProgress) =>
+  //       prevProgress >= 100 ? 10 : prevProgress + 10
+  //     );
+  //   }, 800);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -119,11 +129,23 @@ export default function VerticalTab() {
       </Tabs>
       <TabPanel value={value} index={0}>
         <LinearProgressWithLabel value={progress} />
-        <PersonalForm />
+        <PersonalForm
+          userPersonalData={userPersonalData}
+          setUserPersonalData={setUserPersonalData}
+          onSubmitPersonal={onSubmitPersonal}
+          open={open}
+          setOpen={setOpen}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <LinearProgressWithLabel value={progress} />
-        <FinancialForm />
+        <FinancialForm
+          userFinancialData={userFinancialData}
+          setUserFinancialData={setUserFinancialData}
+          onSubmitFinancial={onSubmitFinancial}
+          open={open}
+          setOpen={setOpen}
+        />
       </TabPanel>
     </div>
   );
