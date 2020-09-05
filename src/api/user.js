@@ -53,3 +53,110 @@ export function signInApi(data) {
       return err.message;
     });
 }
+
+export function savePersonalInfoApi(data, token) {
+  const url = `${basePath}/${apiVersion}/save-personal-info`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+
+export function getPersonalInfoApi(token) {
+  const url = `${basePath}/${apiVersion}/get-personal-info`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+
+export function saveFinancialInfoApi(data, token) {
+  const url = `${basePath}/${apiVersion}/save-financial-info`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+
+export function getFinancialInfoApi(token) {
+  const url = `${basePath}/${apiVersion}/get-financial-info`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+
+export function getColumnsNullsApi(token) {
+  const url = `${basePath}/${apiVersion}/get-columns-nulls`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}

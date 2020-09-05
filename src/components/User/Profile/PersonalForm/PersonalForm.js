@@ -27,8 +27,11 @@ export default function PersonalForm(props) {
     onSubmitPersonal,
     open,
     setOpen,
+    openError,
+    setOpenError,
+    message,
   } = props;
-  const { register, errors, handleSubmit } = useForm();
+  const { register, errors, handleSubmit } = useForm({});
 
   const handleChange = (e) => {
     try {
@@ -49,6 +52,7 @@ export default function PersonalForm(props) {
 
   const handleClose = () => {
     setOpen(false);
+    setOpenError(false);
   };
 
   return (
@@ -604,6 +608,16 @@ export default function PersonalForm(props) {
             </Button>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={openError}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} variant="filled" severity="error">
+            {message}
+          </Alert>
+        </Snackbar>
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           open={open}

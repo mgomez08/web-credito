@@ -23,6 +23,9 @@ export default function FinancialForm(props) {
     onSubmitFinancial,
     open,
     setOpen,
+    openError,
+    setOpenError,
+    message,
   } = props;
   const { register, errors, handleSubmit } = useForm();
 
@@ -45,6 +48,7 @@ export default function FinancialForm(props) {
 
   const handleClose = () => {
     setOpen(false);
+    setOpenError(false);
   };
 
   return (
@@ -263,6 +267,16 @@ export default function FinancialForm(props) {
             </Button>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={openError}
+          autoHideDuration={3000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} variant="filled" severity="error">
+            {message}
+          </Alert>
+        </Snackbar>
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           open={open}

@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 export default function MenuTopUser(props) {
   const logoutUser = () => {
     logout();
-    window.location.reload();
   };
 
   const classes = useStyles();
@@ -67,7 +66,7 @@ export default function MenuTopUser(props) {
               Menú 3
             </Button>
             <Button
-              href="/register"
+              href="/login"
               color="inherit"
               variant="outlined"
               onClick={logoutUser}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Box, Tabs, Tab, LinearProgress, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,10 +6,11 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import PersonalForm from "../../PersonalForm";
 import FinancialForm from "../../FinancialForm";
+import { getColumnsNullsApi } from "../../../../../api/user";
+import { getAccessTokenApi } from "../../../../../api/auth";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -22,28 +23,6 @@ function TabPanel(props) {
     </div>
   );
 }
-
-function LinearProgressWithLabel(props) {
-  const classes = useStyles();
-  return (
-    <Box display="flex" alignItems="center" className={classes.progressForm}>
-      <Box width="100%" mr={1}>
-        <LinearProgress
-          className={classes.bar}
-          color="secondary"
-          variant="determinate"
-          {...props}
-        />
-      </Box>
-      <Box minWidth={35}>
-        <Typography variant="body2" color="textSecondary">{`${Math.round(
-          props.value
-        )}%`}</Typography>
-      </Box>
-    </Box>
-  );
-}
-
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
@@ -69,6 +48,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function LinearProgressWithLabel(props) {
+  const classes = useStyles();
+  return (
+    <Box display="flex" alignItems="center" className={classes.progressForm}>
+      <Box width="100%" mr={1}>
+        <LinearProgress
+          className={classes.bar}
+          color="secondary"
+          variant="determinate"
+          {...props}
+        />
+      </Box>
+      <Box minWidth={35}>
+        <Typography variant="body2" color="textSecondary">{`${Math.round(
+          props.value
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
 export default function HorizontalTab(props) {
   const {
     userPersonalData,
@@ -79,20 +79,19 @@ export default function HorizontalTab(props) {
     onSubmitFinancial,
     open,
     setOpen,
+    openError,
+    setOpenError,
+    message,
   } = props;
-  const [value, setValue] = React.useState(0);
-  const [progress, setProgress] = React.useState(10);
-
-  // React.useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((prevProgress) =>
-  //       prevProgress >= 100 ? 10 : prevProgress + 10
-  //     );
-  //   }, 800);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
+  const [value, setValue] = useState(0);
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const fetchData = async () => {
+      const columnsNulls = await getColumnsNullsApi(getAccessTokenApi());
+      setProgress((26 - columnsNulls.columnsNulls[0].value) * (100 / 26));
+    };
+    fetchData();
+  }, [onSubmitPersonal, onSubmitFinancial]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -121,6 +120,9 @@ export default function HorizontalTab(props) {
           onSubmitPersonal={onSubmitPersonal}
           open={open}
           setOpen={setOpen}
+          openError={openError}
+          setOpenError={setOpenError}
+          message={message}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -131,6 +133,9 @@ export default function HorizontalTab(props) {
           onSubmitFinancial={onSubmitFinancial}
           open={open}
           setOpen={setOpen}
+          openError={openError}
+          setOpenError={setOpenError}
+          message={message}
         />
       </TabPanel>
     </>
