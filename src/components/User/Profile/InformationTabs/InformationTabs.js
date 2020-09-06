@@ -33,6 +33,7 @@ export default function InformationTabs() {
     };
     fetchData();
   }, []);
+
   return userPersonalData ? (
     <Tabs
       userPersonalData={userPersonalData}
@@ -41,15 +42,20 @@ export default function InformationTabs() {
       setUserFinancialData={setUserFinancialData}
     />
   ) : (
-    <Grid container direction="row" justify="center" alignItems="center">
-      <Grid item xs={2} />
-      <Grid item xs={4}>
-        <Typography variant="h4" color="secondary">
-          Cargando su información
-        </Typography>
-        <CircularProgress color="secondary" size={100} />
-      </Grid>
-      <Grid item xs={4} />
+    <Grid container direction="column" justify="center" alignItems="center">
+      <Typography
+        variant="h4"
+        align="center"
+        color="secondary"
+        style={{ padding: 30 }}
+      >
+        Cargando su información, por favor espere un momento
+      </Typography>
+      <CircularProgress
+        color="secondary"
+        size={100}
+        style={{ marginBottom: 200 }}
+      />
     </Grid>
   );
 }

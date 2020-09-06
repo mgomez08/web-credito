@@ -38,7 +38,7 @@ export default function Profile() {
           </Typography>
           <Grid
             container
-            direction="column"
+            direction="row"
             justify="center"
             className={classes.content}
           >
