@@ -72,6 +72,10 @@ export default function FinancialForm(props) {
             defaultValue={userFinancialData.yearsexperience}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
             })}
           />
           <Typography
@@ -215,6 +219,10 @@ export default function FinancialForm(props) {
             defaultValue={userFinancialData.monthlysalary}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
             })}
           />
           <Typography
@@ -243,6 +251,10 @@ export default function FinancialForm(props) {
             defaultValue={userFinancialData.monthlyexpenditure}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
             })}
           />
           <Typography

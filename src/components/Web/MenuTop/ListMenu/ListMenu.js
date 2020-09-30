@@ -17,12 +17,12 @@ export default function ListMenu() {
   return (
     <div className="list-menu">
       <List component="nav" aria-label="main mailbox folders">
-        <Link to="/menu1">
+        <Link to="/nosotros">
           <ListItem button>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary="Menú 1" />
+            <ListItemText primary="Nosotros" />
           </ListItem>
         </Link>
         <Link to="/menu2">

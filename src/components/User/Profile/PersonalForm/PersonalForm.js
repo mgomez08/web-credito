@@ -257,7 +257,11 @@ export default function PersonalForm(props) {
               minLength: {
                 value: 8,
                 message:
-                  "El número de identificación debe tener mínimo 8 digitos",
+                  "El número de identificación debe tener mínimo 7 digitos",
+              },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
               },
             })}
           />
@@ -286,6 +290,10 @@ export default function PersonalForm(props) {
                 value: 10,
                 message: "El número de celular debe tener mínimo 10 digitos",
               },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
             })}
           />
           <Typography
@@ -309,6 +317,14 @@ export default function PersonalForm(props) {
             defaultValue={userPersonalData.age}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
+              min: {
+                value: 18,
+                message: "Debe tener mínimo 18 años",
+              },
             })}
           />
           <Typography
@@ -408,7 +424,7 @@ export default function PersonalForm(props) {
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
-            label="Número de personas de su Núcleo Familiar"
+            label="Número de personas de su Núcleo Familiar(incluyéndose)"
             variant="outlined"
             color="secondary"
             fullWidth
@@ -418,6 +434,10 @@ export default function PersonalForm(props) {
             defaultValue={userPersonalData.numpersonsfamilynucleus}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
             })}
           />
           <Typography
@@ -441,6 +461,10 @@ export default function PersonalForm(props) {
             defaultValue={userPersonalData.numpersonsdependents}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
             })}
           />
           <Typography

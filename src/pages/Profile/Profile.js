@@ -33,7 +33,7 @@ export default function Profile() {
       >
         <Grid item xs={false} md={1} />
         <Grid item xs={12} md={10}>
-          <Typography color="initial" variant="h2" align="center">
+          <Typography color="initial" align="center" variant="h2">
             Edita tu información
           </Typography>
           <Grid

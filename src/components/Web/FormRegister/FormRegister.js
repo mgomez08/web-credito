@@ -145,6 +145,10 @@ export default function FormRegister() {
                 message:
                   "El número de identificación debe tener mínimo 8 digitos",
               },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
             })}
           />
           <Typography
@@ -251,6 +255,10 @@ export default function FormRegister() {
               minLength: {
                 value: 10,
                 message: "El número de celular debe tener mínimo 10 digitos",
+              },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
               },
             })}
           />

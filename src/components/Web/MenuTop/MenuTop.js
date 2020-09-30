@@ -52,8 +52,8 @@ export default function MenuTop(props) {
             <img src={Logo} alt="MiCrédito" />
           </Link>
           <Hidden smDown>
-            <Button href="/menu1" color="inherit">
-              Menú 1
+            <Button href="/nosotros" color="inherit">
+              Nosotros
             </Button>
             <Button href="/menu2" color="inherit">
               Menú 2
