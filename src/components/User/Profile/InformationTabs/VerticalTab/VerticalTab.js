@@ -93,6 +93,7 @@ export default function VerticalTab(props) {
     openError,
     setOpenError,
     message,
+    totalcolumns,
   } = props;
   const [value, setValue] = useState(0);
   const [progress, setProgress] = useState(10);
@@ -100,10 +101,14 @@ export default function VerticalTab(props) {
   useEffect(() => {
     const fetchData = async () => {
       const columnsNulls = await getColumnsNullsApi(getAccessTokenApi());
-      setProgress((26 - columnsNulls.columnsNulls[0].value) * (100 / 26));
+      setProgress(
+        (totalcolumns.total -
+          (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
+          (100 / totalcolumns.total)
+      );
     };
     fetchData();
-  }, [onSubmitPersonal, onSubmitFinancial]);
+  }, [onSubmitPersonal, onSubmitFinancial, totalcolumns]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

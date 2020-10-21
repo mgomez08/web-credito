@@ -183,7 +183,7 @@ export default function PersonalForm(props) {
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
-            <InputLabel htmlFor="city-birth">Cuidad de nacimiento</InputLabel>
+            <InputLabel htmlFor="city-birth">Ciudad de nacimiento</InputLabel>
             <Select
               native
               name="citybirth"
@@ -338,6 +338,41 @@ export default function PersonalForm(props) {
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="marital-status">Estado Civil</InputLabel>
+            <Select
+              native
+              name="maritalstatus"
+              defaultValue={userPersonalData.maritalstatus}
+              onChange={handleChange}
+              label="Estado Civil"
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
+            >
+              <option aria-label="None" />
+              <option value={"Soltero(a)"}>Soltero(a)</option>
+              <option value={"Casado(a)"}>Casado(a)</option>
+              <option value={"Unión Libre"}>Unión Libre</option>
+              <option value={"Divorciado(a)"}>Divorciado(a)</option>
+              <option value={"En relación"}>
+                En relación (más de 1 año de convivencia)
+              </option>
+              <option value={"Separado(a)"}>Separado(a)</option>
+              <option value={"Viudo(a)"}>Viudo(a)</option>
+              <option value={"Comprometido(a)"}>Comprometido(a)</option>
+            </Select>
+          </FormControl>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.maritalstatus?.message}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
             <InputLabel htmlFor="educational-level">
               Nivel de Estudio
             </InputLabel>
@@ -352,10 +387,12 @@ export default function PersonalForm(props) {
               })}
             >
               <option aria-label="None" />
+              <option value={"Sin Estudios"}>Sin Estudios</option>
+              <option value={"Primaria"}>Primaria</option>
               <option value={"Bachiller"}>Bachiller</option>
               <option value={"Técnico"}>Técnico</option>
               <option value={"Tecnólogo"}>Tecnólogo</option>
-              <option value={"Profesional"}>Profesional</option>
+              <option value={"Universitario"}>Universitario</option>
               <option value={"Especialista"}>Especialista</option>
               <option value={"Magister"}>Magister</option>
               <option value={"Doctorado"}>Doctorado</option>
@@ -490,6 +527,7 @@ export default function PersonalForm(props) {
               })}
             >
               <option aria-label="None" />
+              <option value={"Familiar"}>Familiar</option>
               <option value={"Patrimonio"}>Patrimonio</option>
               <option value={"Propia"}>Propia</option>
               <option value={"Arriendo"}>Arriendo</option>
@@ -541,7 +579,7 @@ export default function PersonalForm(props) {
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
             <InputLabel htmlFor="city-residence">
-              Cuidad de residencia
+              Ciudad de residencia
             </InputLabel>
             <Select
               native

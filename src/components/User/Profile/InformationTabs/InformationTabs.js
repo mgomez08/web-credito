@@ -71,6 +71,42 @@ function Tabs(props) {
   const [openError, setOpenError] = useState(false);
   const [message, setMessage] = useState("");
 
+  const validcreditinstitution = () => {
+    if (userFinancialData?.havecredits == null) {
+      return false;
+    } else if (userFinancialData.havecredits === "Si") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const validsavingsaccounts = () => {
+    if (userFinancialData?.havesavingsaccount == null) {
+      return false;
+    } else if (userFinancialData.havesavingsaccount === "Si") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  var totalcolumns = validcreditinstitution()
+    ? {
+        total: 31,
+        difference: 0,
+      }
+    : {
+        total: 33,
+        difference: 2,
+      };
+  totalcolumns = validsavingsaccounts()
+    ? {
+        total: totalcolumns.total + 1,
+        difference: totalcolumns.difference,
+      }
+    : {
+        total: totalcolumns.total + 1,
+        difference: totalcolumns.difference + 1,
+      };
   const onSubmitFinancial = async (data, e) => {
     e.preventDefault();
     setUserFinancialData({
@@ -122,6 +158,7 @@ function Tabs(props) {
           openError={openError}
           setOpenError={setOpenError}
           message={message}
+          totalcolumns={totalcolumns}
         />
       </Hidden>
       <Hidden smDown>
@@ -137,6 +174,7 @@ function Tabs(props) {
           openError={openError}
           setOpenError={setOpenError}
           message={message}
+          totalcolumns={totalcolumns}
         />
       </Hidden>
     </div>

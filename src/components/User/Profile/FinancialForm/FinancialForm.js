@@ -12,7 +12,6 @@ import {
 import Alert from "@material-ui/lab/Alert";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import { useForm } from "react-hook-form";
 import "./FinancialForm.scss";
 
@@ -50,7 +49,20 @@ export default function FinancialForm(props) {
     setOpen(false);
     setOpenError(false);
   };
-
+  const validcreditinstitution = () => {
+    if (userFinancialData.havecredits === "Si") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const validsavingsaccounts = () => {
+    if (userFinancialData.havesavingsaccount === "Si") {
+      return true;
+    } else {
+      return false;
+    }
+  };
   return (
     <form onSubmit={handleSubmit(onSubmitFinancial)} className="financial-form">
       <Grid
@@ -123,6 +135,7 @@ export default function FinancialForm(props) {
             color="secondary"
             variant="outlined"
             fullWidth
+            multiline
             name="workposition"
             label="Cargo que desempeña en su trabajo"
             onChange={handleChange}
@@ -191,6 +204,7 @@ export default function FinancialForm(props) {
               <option value={"Prestación de Servicios"}>
                 Prestación de Servicios
               </option>
+              <option value={"Obra o Labor"}>Obra o Labor</option>
             </Select>
           </FormControl>
           <Typography
@@ -203,28 +217,62 @@ export default function FinancialForm(props) {
           </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <TextField
-            label="Ingreso mensual base"
-            variant="outlined"
-            color="secondary"
-            fullWidth
-            type="number"
-            name="monthlysalary"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
-            }}
-            onChange={handleChange}
-            defaultValue={userFinancialData.monthlysalary}
-            inputRef={register({
-              required: { value: true, message: "Campo obligatorio" },
-              pattern: {
-                value: /^[^.,-]?\d+$/i,
-                message: "Solo puede ingresar números enteros y positivos.",
-              },
-            })}
-          />
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="totalassets">
+              Activos Totales (bienes, etc)
+            </InputLabel>
+            <Select
+              native
+              name="totalassets"
+              label="Activos totales (bienes, titulos de valor, etc)"
+              onChange={handleChange}
+              defaultValue={userFinancialData.totalassets}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
+            >
+              <option aria-label="None" />
+              <option value={"1"}>Menor a 5.000.000 Pesos Colombianos</option>
+              <option value={"2"}>
+                Entre 5.000.001 y 10.000.000 Pesos Colombianos
+              </option>
+              <option value={"3"}>Mayor a 10.000.001 Pesos Colombianos</option>
+            </Select>
+          </FormControl>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.totalassets?.message}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="monthlysalary">
+              Salario mensual base
+            </InputLabel>
+            <Select
+              native
+              name="monthlysalary"
+              label="Salario mensual base"
+              onChange={handleChange}
+              defaultValue={userFinancialData.monthlysalary}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
+            >
+              <option aria-label="None" />
+              <option value={"1"}>
+                Menor o Igual a 1.000.000 Pesos Colombianos
+              </option>
+              <option value={"2"}>
+                Entre 1.000.001 y 3.000.000 Pesos Colombianos
+              </option>
+              <option value={"3"}>Mayor a 3.000.001 Pesos Colombianos</option>
+            </Select>
+          </FormControl>
           <Typography
             variant="body1"
             display="block"
@@ -235,28 +283,103 @@ export default function FinancialForm(props) {
           </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>
-          <TextField
-            label="Promedio egresos mensuales"
-            variant="outlined"
-            color="secondary"
-            fullWidth
-            type="number"
-            name="monthlyexpenditure"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
-            }}
-            onChange={handleChange}
-            defaultValue={userFinancialData.monthlyexpenditure}
-            inputRef={register({
-              required: { value: true, message: "Campo obligatorio" },
-              pattern: {
-                value: /^[^.,-]?\d+$/i,
-                message: "Solo puede ingresar números enteros y positivos.",
-              },
-            })}
-          />
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="additionalincome">
+              Ingresos adicionales
+            </InputLabel>
+            <Select
+              native
+              name="additionalincome"
+              label="Ingresos adicionales"
+              onChange={handleChange}
+              defaultValue={userFinancialData.additionalincome}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
+            >
+              <option aria-label="None" />
+              <option value={"1"}>No posee ingresos adicionales</option>
+              <option value={"2"}>
+                Menor o Igual a 1.000.000 Pesos Colombianos
+              </option>
+              <option value={"3"}>
+                Entre 1.000.001 y 5.000.000 Pesos Colombianos
+              </option>
+              <option value={"4"}>Mayor a 5.000.001 Pesos Colombianos</option>
+            </Select>
+          </FormControl>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.additionalincome?.message}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="totalmonthlyincome">
+              Ingresos mensuales totales
+            </InputLabel>
+            <Select
+              native
+              name="totalmonthlyincome"
+              label="Ingresos mensuales totales"
+              onChange={handleChange}
+              defaultValue={userFinancialData.totalmonthlyincome}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
+            >
+              <option aria-label="None" />
+              <option value={"1"}>
+                Menor o Igual a 1.000.000 Pesos Colombianos
+              </option>
+              <option value={"2"}>
+                Entre 1.000.001 y 5.000.000 Pesos Colombianos
+              </option>
+              <option value={"3"}>
+                Entre 5.000.001 y 10.000.000 Pesos Colombianos
+              </option>
+              <option value={"4"}>Mayor a 10.000.001 Pesos Colombianos</option>
+            </Select>
+          </FormControl>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.totalmonthlyincome?.message}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="monthlyexpenditure">
+              Promedio egresos mensuales
+            </InputLabel>
+            <Select
+              native
+              name="monthlyexpenditure"
+              label="Promedio egresos mensuales"
+              onChange={handleChange}
+              defaultValue={userFinancialData.monthlyexpenditure}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
+            >
+              <option aria-label="None" />
+              <option value={"1"}>Menor a 1.000.000 Pesos Colombianos</option>
+              <option value={"2"}>
+                Entre 1.000.001 y 5.000.000 Pesos Colombianos
+              </option>
+              <option value={"3"}>
+                Entre 5.000.001 y 10.000.000 Pesos Colombianos
+              </option>
+              <option value={"4"}>Mayor a 10.000.001 Pesos Colombianos</option>
+            </Select>
+          </FormControl>
           <Typography
             variant="body1"
             display="block"
@@ -266,6 +389,207 @@ export default function FinancialForm(props) {
             {errors?.monthlyexpenditure?.message}
           </Typography>
         </Grid>
+        <Grid item xs={12} lg={6}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="havecredits">
+              ¿Tiene créditos con alguna entidad financiera?
+            </InputLabel>
+            <Select
+              native
+              name="havecredits"
+              label="¿Tiene créditos con alguna entidad financiera?"
+              onChange={handleChange}
+              defaultValue={userFinancialData.havecredits}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
+            >
+              <option aria-label="None" />
+              <option value={"Si"}>Sí</option>
+              <option value={"No"}>No</option>
+            </Select>
+          </FormControl>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.havecredits?.message}
+          </Typography>
+        </Grid>
+        {validcreditinstitution() ? (
+          <>
+            <Grid item xs={12} lg={6}>
+              <FormControl
+                variant="outlined"
+                color="secondary"
+                fullWidth={true}
+              >
+                <InputLabel htmlFor="amountcreditacquired">
+                  ¿Entre qué rangos de precios está el crédito adquirido?
+                </InputLabel>
+                <Select
+                  native
+                  name="amountcreditacquired"
+                  label="¿Entre qué rangos de precios está el crédito adquirido?"
+                  onChange={handleChange}
+                  defaultValue={userFinancialData.amountcreditacquired}
+                  inputRef={register({
+                    required: { value: true, message: "Campo obligatorio" },
+                  })}
+                >
+                  <option aria-label="None" />
+                  <option value={"1"}>
+                    Menor o Igual a 1.000.000 Pesos Colombianos
+                  </option>
+                  <option value={"2"}>
+                    Entre 1.000.001 y 5.000.000 Pesos Colombianos
+                  </option>
+                  <option value={"3"}>
+                    Entre 5.000.001 y 10.000.000 Pesos Colombianos
+                  </option>
+                  <option value={"4"}>
+                    Mayor a 10.000.001 Pesos Colombianos
+                  </option>
+                </Select>
+              </FormControl>
+              <Typography
+                variant="body1"
+                display="block"
+                color="error"
+                gutterBottom
+              >
+                {errors?.amountcreditacquired?.message}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} lg={6}>
+              <FormControl
+                variant="outlined"
+                color="secondary"
+                fullWidth={true}
+              >
+                <InputLabel htmlFor="bankentity">
+                  ¿En cuál entidad lo solicitó?
+                </InputLabel>
+                <Select
+                  native
+                  name="bankentity"
+                  label="¿En cuál entidad lo solicitó?"
+                  onChange={handleChange}
+                  defaultValue={userFinancialData.bankentity}
+                  inputRef={register({
+                    required: { value: true, message: "Campo obligatorio" },
+                  })}
+                >
+                  <option aria-label="None" />
+                  <option value={"1"}>Banco Agrario de Colombia</option>
+                  <option value={"2"}>Banco AV Villas</option>
+                  <option value={"3"}>Banco Caja Social</option>
+                  <option value={"4"}>Banco de Occidente</option>
+                  <option value={"5"}>Banco de Bogotá</option>
+                  <option value={"6"}>Bancolombia</option>
+                  <option value={"7"}>Banco Mundo Mujer</option>
+                  <option value={"8"}>Banco Popular</option>
+                  <option value={"9"}>Banco Santander</option>
+                  <option value={"10"}>Banco BBVA</option>
+                  <option value={"11"}>Option 11</option>
+                  <option value={"12"}>Citi Bank</option>
+                  <option value={"13"}>Colpatria</option>
+                  <option value={"14"}>Banco Davivienda</option>
+                  <option value={"15"}>Itau</option>
+                  <option value={"16"}>Otro</option>
+                </Select>
+              </FormControl>
+              <Typography
+                variant="body1"
+                display="block"
+                color="error"
+                gutterBottom
+              >
+                {errors?.bankentity?.message}
+              </Typography>
+            </Grid>
+          </>
+        ) : (
+          <br />
+        )}
+        <Grid item xs={12} lg={6}>
+          <FormControl variant="outlined" color="secondary" fullWidth={true}>
+            <InputLabel htmlFor="havesavingsaccount">
+              ¿Posee cuentas de ahorro con alguna entidad financiera?
+            </InputLabel>
+            <Select
+              native
+              name="havesavingsaccount"
+              label="¿Posee cuentas de ahorro con alguna entidad financiera?"
+              onChange={handleChange}
+              defaultValue={userFinancialData.havesavingsaccount}
+              inputRef={register({
+                required: { value: true, message: "Campo obligatorio" },
+              })}
+            >
+              <option aria-label="None" />
+              <option value={"Si"}>Sí</option>
+              <option value={"No"}>No</option>
+            </Select>
+          </FormControl>
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.havesavingsaccount?.message}
+          </Typography>
+        </Grid>
+        {validsavingsaccounts() ? (
+          <Grid item xs={12} lg={6}>
+            <FormControl variant="outlined" color="secondary" fullWidth={true}>
+              <InputLabel htmlFor="bankentityaccounts">
+                ¿En cuál entidad lo solicitó?
+              </InputLabel>
+              <Select
+                native
+                name="bankentityaccounts"
+                label="¿En cuál entidad lo solicitó?"
+                onChange={handleChange}
+                defaultValue={userFinancialData.bankentityaccounts}
+                inputRef={register({
+                  required: { value: true, message: "Campo obligatorio" },
+                })}
+              >
+                <option aria-label="None" />
+                <option value={"1"}>Banco Agrario de Colombia</option>
+                <option value={"2"}>Banco AV Villas</option>
+                <option value={"3"}>Banco Caja Social</option>
+                <option value={"4"}>Banco de Occidente</option>
+                <option value={"5"}>Banco de Bogotá</option>
+                <option value={"6"}>Bancolombia</option>
+                <option value={"7"}>Banco Mundo Mujer</option>
+                <option value={"8"}>Banco Popular</option>
+                <option value={"9"}>Banco Santander</option>
+                <option value={"10"}>Banco BBVA</option>
+                <option value={"11"}>Option 11</option>
+                <option value={"12"}>Citi Bank</option>
+                <option value={"13"}>Colpatria</option>
+                <option value={"14"}>Banco Davivienda</option>
+                <option value={"15"}>Itau</option>
+                <option value={"16"}>Otro</option>
+              </Select>
+            </FormControl>
+            <Typography
+              variant="body1"
+              display="block"
+              color="error"
+              gutterBottom
+            >
+              {errors?.bankentityaccounts?.message}
+            </Typography>
+          </Grid>
+        ) : (
+          <br />
+        )}
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item xs={12}>
             <Button
