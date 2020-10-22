@@ -96,7 +96,7 @@ export default function VerticalTab(props) {
     totalcolumns,
   } = props;
   const [value, setValue] = useState(0);
-  const [progress, setProgress] = useState(10);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +104,12 @@ export default function VerticalTab(props) {
       setProgress(
         (totalcolumns.total -
           (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
-          (100 / totalcolumns.total)
+          (100 / totalcolumns.total) >
+          100
+          ? 100
+          : (totalcolumns.total -
+              (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
+              (100 / totalcolumns.total)
       );
     };
     fetchData();
@@ -156,6 +161,7 @@ export default function VerticalTab(props) {
           openError={openError}
           setOpenError={setOpenError}
           message={message}
+          totalcolumns={totalcolumns}
         />
       </TabPanel>
     </div>

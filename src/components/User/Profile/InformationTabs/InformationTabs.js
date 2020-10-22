@@ -71,12 +71,24 @@ function Tabs(props) {
   const [openError, setOpenError] = useState(false);
   const [message, setMessage] = useState("");
 
+  var totalcolumns = {
+    total: 32,
+    difference: 3,
+  };
   const validcreditinstitution = () => {
     if (userFinancialData?.havecredits == null) {
       return false;
     } else if (userFinancialData.havecredits === "Si") {
+      totalcolumns = {
+        total: totalcolumns.total + 2,
+        difference: totalcolumns.difference - 2,
+      };
       return true;
-    } else {
+    } else if (userFinancialData.havecredits === "No") {
+      totalcolumns = {
+        total: totalcolumns.total - 2 < 33 ? 33 : totalcolumns.total - 2,
+        difference: totalcolumns.difference,
+      };
       return false;
     }
   };
@@ -84,35 +96,36 @@ function Tabs(props) {
     if (userFinancialData?.havesavingsaccount == null) {
       return false;
     } else if (userFinancialData.havesavingsaccount === "Si") {
+      totalcolumns = {
+        total: totalcolumns.total + 1,
+        difference: totalcolumns.difference - 1,
+      };
       return true;
-    } else {
+    } else if (userFinancialData.havesavingsaccount === "No") {
+      totalcolumns = {
+        total: totalcolumns.total - 1 < 33 ? 33 : totalcolumns.total - 1,
+        difference: totalcolumns.difference,
+      };
       return false;
     }
   };
-  var totalcolumns = validcreditinstitution()
-    ? {
-        total: 31,
-        difference: 0,
-      }
-    : {
-        total: 33,
-        difference: 2,
-      };
-  totalcolumns = validsavingsaccounts()
-    ? {
-        total: totalcolumns.total + 1,
-        difference: totalcolumns.difference,
-      }
-    : {
-        total: totalcolumns.total + 1,
-        difference: totalcolumns.difference + 1,
-      };
+  validcreditinstitution();
+  validsavingsaccounts();
+
   const onSubmitFinancial = async (data, e) => {
-    e.preventDefault();
     setUserFinancialData({
       ...userFinancialData,
       data,
     });
+
+    if (userFinancialData.havecredits === "No") {
+      userFinancialData.amountcreditacquired = null;
+      userFinancialData.bankentity = null;
+    }
+    if (userFinancialData.havesavingsaccount === "No") {
+      userFinancialData.bankentityaccounts = null;
+    }
+
     const result = await saveFinancialInfoApi(
       userFinancialData,
       getAccessTokenApi()

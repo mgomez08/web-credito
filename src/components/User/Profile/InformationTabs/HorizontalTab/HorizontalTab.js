@@ -93,12 +93,16 @@ export default function HorizontalTab(props) {
       setProgress(
         (totalcolumns.total -
           (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
-          (100 / totalcolumns.total)
+          (100 / totalcolumns.total) >
+          100
+          ? 100
+          : (totalcolumns.total -
+              (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
+              (100 / totalcolumns.total)
       );
     };
     fetchData();
   }, [onSubmitPersonal, onSubmitFinancial, totalcolumns]);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -142,6 +146,7 @@ export default function HorizontalTab(props) {
           openError={openError}
           setOpenError={setOpenError}
           message={message}
+          totalcolumns={totalcolumns}
         />
       </TabPanel>
     </>

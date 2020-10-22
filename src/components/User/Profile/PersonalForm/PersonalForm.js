@@ -19,6 +19,7 @@ import {
   getIdDepartment,
 } from "../../../../utils/FormObjects";
 import { useForm } from "react-hook-form";
+import moment from "moment";
 
 export default function PersonalForm(props) {
   const {
@@ -31,7 +32,7 @@ export default function PersonalForm(props) {
     setOpenError,
     message,
   } = props;
-  const { register, errors, handleSubmit } = useForm({});
+  const { register, errors, handleSubmit, reset } = useForm({});
 
   const handleChange = (e) => {
     try {
@@ -46,6 +47,7 @@ export default function PersonalForm(props) {
           ...userPersonalData,
           [datebirth]: e._d,
         });
+        reset({ age: moment().diff(e, "years", false) });
       }
     } catch (error) {}
   };
@@ -313,6 +315,7 @@ export default function PersonalForm(props) {
             fullWidth
             type="number"
             name="age"
+            disabled
             onChange={handleChange}
             defaultValue={userPersonalData.age}
             inputRef={register({
