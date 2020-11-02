@@ -52,14 +52,14 @@ export default function MenuTop(props) {
             <img src={Logo} alt="MiCrédito" />
           </Link>
           <Hidden smDown>
-            <Button href="/nosotros" color="inherit">
+            <Button href="/scoring" color="inherit">
+              ¿Qué es Scoring?
+            </Button>
+            <Button href="/about" color="inherit">
               Nosotros
             </Button>
-            <Button href="/menu2" color="inherit">
-              Menú 2
-            </Button>
-            <Button href="/menu3" color="inherit">
-              Menú 3
+            <Button href="/contact" color="inherit">
+              Contactenos
             </Button>
             <Button href="/login" color="inherit">
               Iniciar Sesión

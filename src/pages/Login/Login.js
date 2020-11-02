@@ -18,8 +18,8 @@ export default function Login() {
         alignItems="center"
         className="form-title"
       >
-        <Grid item xs={2} />
-        <Grid item xs={8}>
+        <Grid item xs={1} />
+        <Grid item xs={10}>
           <Grid
             container
             direction="column"
@@ -27,7 +27,7 @@ export default function Login() {
             alignItems="center"
           >
             <Grid item>
-              <Typography color="initial" variant="h2">
+              <Typography align="center" color="initial" variant="h2">
                 Inicia Sesión en MiCrédito
               </Typography>
             </Grid>
@@ -36,7 +36,7 @@ export default function Login() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2} />
+        <Grid item xs={1} />
       </Grid>
     </div>
   );

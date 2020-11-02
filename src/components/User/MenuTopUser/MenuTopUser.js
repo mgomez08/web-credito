@@ -59,11 +59,8 @@ export default function MenuTopUser(props) {
             <Button href="/perfil" color="inherit">
               Perfil
             </Button>
-            <Button href="/informacion" color="inherit">
-              Información
-            </Button>
-            <Button href="/menu3" color="inherit">
-              Menú 3
+            <Button href="/calcular-scoring" color="inherit">
+              Scoring
             </Button>
             <Button
               href="/login"

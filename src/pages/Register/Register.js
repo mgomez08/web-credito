@@ -17,8 +17,8 @@ export default function Register() {
       alignItems="center"
       className="form-title"
     >
-      <Grid item xs={2} />
-      <Grid item xs={8}>
+      <Grid item xs={1} />
+      <Grid item xs={10}>
         <Grid container direction="column" justify="center" alignItems="center">
           <Grid item>
             <Typography color="initial" variant="h2">
@@ -30,7 +30,7 @@ export default function Register() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={2} />
+      <Grid item xs={1} />
     </Grid>
   );
 }

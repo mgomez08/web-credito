@@ -151,7 +151,7 @@ export default function FormLogin() {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6" color="initial">
+            <Typography align="center" variant="h6" color="initial">
               ¿Aún no estás registrado?
               <Link to="/register"> Regístrate aquí</Link>
             </Typography>

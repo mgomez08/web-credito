@@ -7,9 +7,8 @@ import {
   Divider,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import InfoIcon from "@material-ui/icons/Info";
+import PersonPinIcon from "@material-ui/icons/PersonPin";
+import ScoreIcon from "@material-ui/icons/Score";
 import PersonIcon from "@material-ui/icons/Person";
 import { logout } from "../../../../api/auth";
 import "./ListMenuUser.scss";
@@ -25,25 +24,17 @@ export default function ListMenuUser() {
         <Link to="/perfil">
           <ListItem button>
             <ListItemIcon>
-              <InboxIcon />
+              <PersonPinIcon />
             </ListItemIcon>
             <ListItemText primary="Perfil" />
           </ListItem>
         </Link>
-        <Link to="/información">
+        <Link to="/calcular-scoring">
           <ListItem button>
             <ListItemIcon>
-              <DraftsIcon />
+              <ScoreIcon />
             </ListItemIcon>
-            <ListItemText primary="información" />
-          </ListItem>
-        </Link>
-        <Link to="/menu3">
-          <ListItem button>
-            <ListItemIcon>
-              <InfoIcon />
-            </ListItemIcon>
-            <ListItemText primary="Menú 3" />
+            <ListItemText primary="Scoring" />
           </ListItem>
         </Link>
       </List>

@@ -7,9 +7,9 @@ import {
   Divider,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import InfoIcon from "@material-ui/icons/Info";
+import ScoreIcon from "@material-ui/icons/Score";
 import PersonIcon from "@material-ui/icons/Person";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import "./ListMenu.scss";
@@ -17,28 +17,28 @@ export default function ListMenu() {
   return (
     <div className="list-menu">
       <List component="nav" aria-label="main mailbox folders">
-        <Link to="/nosotros">
+        <Link to="/scoring">
           <ListItem button>
             <ListItemIcon>
-              <InboxIcon />
+              <ScoreIcon />
             </ListItemIcon>
-            <ListItemText primary="Nosotros" />
+            <ListItemText primary="¿Qué es Scoring?" />
           </ListItem>
         </Link>
-        <Link to="/menu2">
-          <ListItem button>
-            <ListItemIcon>
-              <DraftsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Menú 2" />
-          </ListItem>
-        </Link>
-        <Link to="/menu3">
+        <Link to="/about">
           <ListItem button>
             <ListItemIcon>
               <InfoIcon />
             </ListItemIcon>
-            <ListItemText primary="Menú 3" />
+            <ListItemText primary="Nosotros" />
+          </ListItem>
+        </Link>
+        <Link to="/contact">
+          <ListItem button>
+            <ListItemIcon>
+              <ContactSupportIcon />
+            </ListItemIcon>
+            <ListItemText primary="Contactenos" />
           </ListItem>
         </Link>
       </List>

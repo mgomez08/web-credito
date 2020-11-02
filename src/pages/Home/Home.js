@@ -12,6 +12,9 @@ export default function Home() {
         alignItems: "center",
       },
     },
+    MuiInputLabelRoot: {
+      marginRight: theme.spacing(2),
+    },
   }));
   const classes = useStyles();
 
@@ -32,7 +35,6 @@ export default function Home() {
               align="center"
               variant="h1"
               style={{ paddingBottom: 20 }}
-              className="Titulo"
             >
               ¡Bienvenido a MiCrédito!
             </Typography>
@@ -54,7 +56,7 @@ export default function Home() {
             justify="center"
             className={classes.content}
           >
-            <Grid item md={6}>
+            <Grid item xs={12} md={6}>
               <Typography
                 variant="h4"
                 color="secondary"
@@ -80,9 +82,9 @@ export default function Home() {
                 elit.
               </Typography>
             </Grid>
-            <Grid item md={6}></Grid>
-            <Grid item md={6}></Grid>
-            <Grid item md={6}>
+            <Grid item xs={12} md={6}></Grid>
+            <Grid item xs={12} md={6}></Grid>
+            <Grid item xs={12} md={6}>
               <Typography
                 variant="h4"
                 color="secondary"
@@ -108,7 +110,7 @@ export default function Home() {
                 elit.
               </Typography>
             </Grid>
-            <Grid item md={6}>
+            <Grid item xs={12} md={6}>
               <Typography
                 variant="h4"
                 color="secondary"
@@ -134,7 +136,7 @@ export default function Home() {
                 elit.
               </Typography>
             </Grid>
-            <Grid item md={6}></Grid>
+            <Grid item xs={12} md={6}></Grid>
           </Grid>
         </Grid>
         <Grid item xs={1} md={1} />

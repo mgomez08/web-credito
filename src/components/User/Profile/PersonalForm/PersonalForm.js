@@ -439,6 +439,7 @@ export default function PersonalForm(props) {
         <Grid item xs={12} lg={6}>
           <TextField
             label="Ocupación"
+            helperText=" "
             variant="outlined"
             color="secondary"
             fullWidth
@@ -464,7 +465,8 @@ export default function PersonalForm(props) {
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
-            label="Número de personas de su Núcleo Familiar(incluyéndose)"
+            label="Número de personas de su Núcleo Familiar"
+            helperText="*Incluyéndose"
             variant="outlined"
             color="secondary"
             fullWidth

@@ -3,6 +3,8 @@ import "./NavigationFooter.scss";
 import { Typography, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import InfoIcon from "@material-ui/icons/Info";
+import ScoreIcon from "@material-ui/icons/Score";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 
@@ -26,9 +28,9 @@ function RenderListLeft() {
   return (
     <List component="ul">
       <ListItem>
-        <Link to="/contact">
-          <ContactSupportIcon />
-          Contactenos
+        <Link to="/scoring">
+          <ScoreIcon />
+          Scoring
         </Link>
       </ListItem>
       <ListItem>
@@ -44,15 +46,9 @@ function RenderListRight() {
   return (
     <List component="ul">
       <ListItem>
-        <Link to="/contact">
-          <ContactSupportIcon />
-          Contactenos
-        </Link>
-      </ListItem>
-      <ListItem>
-        <Link to="/contact">
-          <ContactSupportIcon />
-          Contactenos
+        <Link to="/about">
+          <InfoIcon />
+          Nosotros
         </Link>
       </ListItem>
     </List>
