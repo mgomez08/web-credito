@@ -64,9 +64,9 @@ export default function LayoutUser(props) {
             [classes.contentShift]: open,
           })}
         >
-          <LoadRoutes routes={routes} />
+          {/* <LoadRoutes routes={routes} /> */}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

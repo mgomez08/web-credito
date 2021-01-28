@@ -52,18 +52,18 @@ export default function MenuTop(props) {
             <img src={Logo} alt="MiCrédito" />
           </Link>
           <Hidden smDown>
-            <Button href="/scoring" color="inherit">
-              ¿Qué es Scoring?
-            </Button>
-            <Button href="/about" color="inherit">
-              Nosotros
-            </Button>
-            <Button href="/contact" color="inherit">
-              Contactenos
-            </Button>
-            <Button href="/login" color="inherit">
-              Iniciar Sesión
-            </Button>
+            <Link className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit" to="/scoring">
+            ¿Qué es Scoring?
+            </Link>
+            <Link className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit" to="/about">
+            Nosotros
+            </Link>
+            <Link className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit" to="/contact">
+            Contactenos
+            </Link>
+            <Link className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit" to="/login">
+            Iniciar Sesión
+            </Link>
             <Button
               href="/register"
               color="inherit"

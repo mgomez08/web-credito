@@ -11,6 +11,7 @@ import Profile from "../pages/Profile/Profile";
 import Error404 from "../pages/Error404";
 import { getAccessTokenApi } from "../api/auth";
 
+
 const routes = [
   {
     path: "/user",
@@ -55,5 +56,4 @@ const routes = [
     ],
   },
 ];
-
 export default routes;

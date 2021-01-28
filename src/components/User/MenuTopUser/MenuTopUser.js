@@ -56,12 +56,12 @@ export default function MenuTopUser(props) {
             <img src={Logo} alt="MiCrédito" />
           </Link>
           <Hidden smDown>
-            <Button href="/perfil" color="inherit">
+            <Link className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit" to="/perfil">
               Perfil
-            </Button>
-            <Button href="/calcular-scoring" color="inherit">
+            </Link>
+            <Link className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit" to="/calcular-scoring">
               Scoring
-            </Button>
+            </Link>
             <Button
               href="/login"
               color="inherit"
