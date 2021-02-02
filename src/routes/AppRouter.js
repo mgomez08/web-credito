@@ -1,9 +1,8 @@
 import React from 'react'
-import { useEffect } from 'react'
 import { 
     BrowserRouter as Router,
     Switch,
-    Redirect
+    Route
 } from 'react-router-dom'
 
 import LayoutBasic from '../layouts/LayoutBasic';
@@ -15,31 +14,28 @@ import Home from '../pages/Home/Home';
 import Register from '../pages/Register/Register';
 import Login from '../pages/Login/Login';
 
-import Profile from '../pages/Profile/Profile';
-
-
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
+import { UserRoutes } from './UserRoutes';
 
-import useAuth from '../hooks/useAuth';
-import { getAccessTokenApi } from '../api/auth';
 import Error404 from '../pages/Error404';
+import useAuth from '../hooks/useAuth';
+import { CircularProgress } from '@material-ui/core';
 
 export const AppRouter = () => {
     const { user, isLoading } = useAuth();
-    // const dispatch = useDispatch();
-    // const { checking, uid } = useSelector(state => state.auth)
-    // useEffect(() => {
-    //     dispatch( startChecking());
-    // }, [dispatch])
+    console.log(user, isLoading);
     if( isLoading ){
-        return <h5>Espere...</h5>
+        return (<CircularProgress
+            color="secondary"
+            size={100}
+            style={{ marginBottom: 200 }}
+          />)
     }else{
         return (
-
             <Router>
                 <div>
-                {getAccessTokenApi() ? <LayoutUser /> : <LayoutBasic />  }
+                {user ? <LayoutUser /> : <LayoutBasic />  }
                     <Switch>
                         <PublicRoute exact
                          path="/" 
@@ -57,18 +53,11 @@ export const AppRouter = () => {
                          isLoggedIn={ !!user }                             
                          />
                         <PrivateRoute 
-                         exact 
-                         path="/user" 
-                         component={Home} 
+                         path="/" 
+                         component={UserRoutes} 
                          isLoggedIn={ !!user }      
                         />
-                        <PrivateRoute 
-                         exact 
-                         path="/perfil" 
-                         component={Profile} 
-                         isLoggedIn={ !!user }      
-                        />
-                        <PublicRoute
+                        <Route
                          component={Error404}                             
                          />
                     </Switch>

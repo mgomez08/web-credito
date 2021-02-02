@@ -59,7 +59,7 @@ export default function DrawerUser(props) {
         </IconButton>
       </div>
       <Divider></Divider>
-      <ListMenu />
+      <ListMenu handleDrawerClose={props.handleDrawerClose}/>
     </Dw>
   );
 }

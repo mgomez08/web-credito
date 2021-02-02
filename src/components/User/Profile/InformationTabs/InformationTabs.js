@@ -25,10 +25,11 @@ export default function InformationTabs() {
   const [userPersonalData, setUserPersonalData] = useState(null);
 
   useEffect(() => {
+
     const fetchData = async () => {
       const personalData = await getPersonalInfoApi(getAccessTokenApi());
-      setUserPersonalData(personalData.userStored[0]);
       const financialData = await getFinancialInfoApi(getAccessTokenApi());
+      setUserPersonalData(personalData.userStored[0]);
       setUserFinancialData(financialData.userStored[0]);
     };
     fetchData();

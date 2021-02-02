@@ -13,20 +13,20 @@ import ScoreIcon from "@material-ui/icons/Score";
 import PersonIcon from "@material-ui/icons/Person";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import "./ListMenu.scss";
-export default function ListMenu() {
+export default function ListMenu(props) {
   return (
     <div className="list-menu">
       <List component="nav" aria-label="main mailbox folders">
         <Link to="/scoring">
-          <ListItem button>
+          <ListItem button onClick={props.handleDrawerClose}>
             <ListItemIcon>
               <ScoreIcon />
             </ListItemIcon>
             <ListItemText primary="¿Qué es Scoring?" />
           </ListItem>
         </Link>
-        <Link to="/about">
-          <ListItem button>
+        <Link to="/about" >
+          <ListItem button onClick={props.handleDrawerClose}>
             <ListItemIcon>
               <InfoIcon />
             </ListItemIcon>
@@ -34,7 +34,7 @@ export default function ListMenu() {
           </ListItem>
         </Link>
         <Link to="/contact">
-          <ListItem button>
+          <ListItem button onClick={props.handleDrawerClose}>
             <ListItemIcon>
               <ContactSupportIcon />
             </ListItemIcon>
@@ -45,7 +45,7 @@ export default function ListMenu() {
       <Divider />
       <List component="nav" aria-label="secondary mailbox folders">
         <Link to="/login">
-          <ListItem button>
+          <ListItem button onClick={props.handleDrawerClose}>
             <ListItemIcon>
               <PersonIcon />
             </ListItemIcon>
@@ -53,7 +53,7 @@ export default function ListMenu() {
           </ListItem>
         </Link>
         <Link to="/register">
-          <ListItem button>
+          <ListItem button onClick={props.handleDrawerClose}>
             <ListItemIcon>
               <PersonAddIcon />
             </ListItemIcon>

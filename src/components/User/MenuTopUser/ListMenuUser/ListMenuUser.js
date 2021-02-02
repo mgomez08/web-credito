@@ -13,7 +13,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import { logout } from "../../../../api/auth";
 import "./ListMenuUser.scss";
 
-export default function ListMenuUser() {
+export default function ListMenuUser(props) {
   const logoutUser = () => {
     logout();
     window.location.reload();
@@ -22,7 +22,7 @@ export default function ListMenuUser() {
     <div className="list-menu">
       <List component="nav" aria-label="main mailbox folders">
         <Link to="/perfil">
-          <ListItem button>
+          <ListItem button onClick={props.handleDrawerClose}>
             <ListItemIcon>
               <PersonPinIcon />
             </ListItemIcon>
@@ -30,7 +30,7 @@ export default function ListMenuUser() {
           </ListItem>
         </Link>
         <Link to="/calcular-scoring">
-          <ListItem button>
+          <ListItem button onClick={props.handleDrawerClose}>
             <ListItemIcon>
               <ScoreIcon />
             </ListItemIcon>

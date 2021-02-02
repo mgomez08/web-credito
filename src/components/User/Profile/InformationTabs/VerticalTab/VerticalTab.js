@@ -99,20 +99,24 @@ export default function VerticalTab(props) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    let unmounted  = false;
     const fetchData = async () => {
       const columnsNulls = await getColumnsNullsApi(getAccessTokenApi());
-      setProgress(
-        (totalcolumns.total -
-          (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
-          (100 / totalcolumns.total) >
-          100
-          ? 100
-          : (totalcolumns.total -
-              (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
-              (100 / totalcolumns.total)
-      );
+      if(!unmounted){
+        setProgress(
+          (totalcolumns.total -
+            (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
+            (100 / totalcolumns.total) >
+            100
+            ? 100
+            : (totalcolumns.total -
+                (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
+                (100 / totalcolumns.total)
+        );
+      }
     };
     fetchData();
+    return() => {unmounted = true}
   }, [onSubmitPersonal, onSubmitFinancial, totalcolumns]);
 
   const handleChange = (event, newValue) => {

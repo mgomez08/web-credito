@@ -12,7 +12,7 @@ export const PublicRoute = ({
         {...rest} 
         component={ (props) =>(
             ( isLoggedIn )
-            ? <Redirect to="/" />
+            ? <Redirect to="/user" />
             : <Component {...props} />
         )}
         />
