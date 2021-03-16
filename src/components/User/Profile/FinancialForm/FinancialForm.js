@@ -14,6 +14,7 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useForm } from "react-hook-form";
 import "./FinancialForm.scss";
+import moment from "moment";
 
 export default function FinancialForm(props) {
   const {
@@ -26,7 +27,7 @@ export default function FinancialForm(props) {
     setOpenError,
     message,
   } = props;
-  const { register, errors, handleSubmit } = useForm();
+  const { register, errors, handleSubmit, reset } = useForm();
 
   const handleChange = (e) => {
     try {
@@ -36,11 +37,13 @@ export default function FinancialForm(props) {
           [e.target.name]: e.target.value,
         });
       } else {
-        const datecurrentjob = "datecurrentjob";
+        const yearsDiff = moment().diff(e, "years", false);
         setUserFinancialData({
           ...userFinancialData,
-          [datecurrentjob]: e._d,
+          [`datecurrentjob`]: e._d,
+          [`yearsexperience`]: yearsDiff,
         });
+        reset({ yearsexperience: yearsDiff});
       }
     } catch (error) {}
   };
@@ -71,34 +74,7 @@ export default function FinancialForm(props) {
         justify="space-between"
         alignItems="center"
         spacing={4}
-      >
-        <Grid item xs={12} lg={6}>
-          <TextField
-            label="Años de experiencia en el trabajo actual"
-            variant="outlined"
-            color="secondary"
-            fullWidth
-            type="number"
-            name="yearsexperience"
-            onChange={handleChange}
-            defaultValue={userFinancialData.yearsexperience}
-            inputRef={register({
-              required: { value: true, message: "Campo obligatorio" },
-              pattern: {
-                value: /^[^.,-]?\d+$/i,
-                message: "Solo puede ingresar números enteros y positivos.",
-              },
-            })}
-          />
-          <Typography
-            variant="body1"
-            display="block"
-            color="error"
-            gutterBottom
-          >
-            {errors?.yearsexperience?.message}
-          </Typography>
-        </Grid>
+      > 
         <Grid item xs={12} lg={6}>
           <KeyboardDatePicker
             fullWidth={true}
@@ -128,6 +104,34 @@ export default function FinancialForm(props) {
             gutterBottom
           >
             {errors?.datecurrentjob?.message}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <TextField
+            label="Años de experiencia en el trabajo actual"
+            variant="outlined"
+            color="secondary"
+            fullWidth
+            disabled
+            type="number"
+            name="yearsexperience"
+            onChange={handleChange}
+            defaultValue={userFinancialData.yearsexperience}
+            inputRef={register({
+              required: { value: true, message: "Campo obligatorio" },
+              pattern: {
+                value: /^[^.,-]?\d+$/i,
+                message: "Solo puede ingresar números enteros y positivos.",
+              },
+            })}
+          />
+          <Typography
+            variant="body1"
+            display="block"
+            color="error"
+            gutterBottom
+          >
+            {errors?.yearsexperience?.message}
           </Typography>
         </Grid>
         <Grid item xs={12} lg={6}>

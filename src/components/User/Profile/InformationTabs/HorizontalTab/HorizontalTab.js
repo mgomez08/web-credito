@@ -77,6 +77,8 @@ export default function HorizontalTab(props) {
     setUserFinancialData,
     onSubmitPersonal,
     onSubmitFinancial,
+    progress,
+    setProgress,
     open,
     setOpen,
     openError,
@@ -86,7 +88,6 @@ export default function HorizontalTab(props) {
   } = props;
 
   const [value, setValue] = useState(0);
-  const [progress, setProgress] = useState(0);
   useEffect(() => {
     let unmounted  = false;
     const fetchData = async () => {
@@ -106,7 +107,7 @@ export default function HorizontalTab(props) {
     };
     fetchData();
     return() => {unmounted = true}
-  }, [onSubmitPersonal, onSubmitFinancial, totalcolumns]);
+  }, [onSubmitPersonal, onSubmitFinancial, totalcolumns, setProgress]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

@@ -42,12 +42,13 @@ export default function PersonalForm(props) {
           [e.target.name]: e.target.value,
         });
       } else {
-        const datebirth = "datebirth";
+        const yearsDiff = moment().diff(e, "years", false);
         setUserPersonalData({
           ...userPersonalData,
-          [datebirth]: e._d,
+          [`datebirth`]: e._d,
+          [`age`]: yearsDiff
         });
-        reset({ age: moment().diff(e, "years", false) });
+        reset({ age:  yearsDiff});
       }
     } catch (error) {}
   };

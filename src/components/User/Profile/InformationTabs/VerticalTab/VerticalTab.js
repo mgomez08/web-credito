@@ -88,6 +88,8 @@ export default function VerticalTab(props) {
     setUserFinancialData,
     onSubmitPersonal,
     onSubmitFinancial,
+    progress,
+    setProgress,
     open,
     setOpen,
     openError,
@@ -96,7 +98,6 @@ export default function VerticalTab(props) {
     totalcolumns,
   } = props;
   const [value, setValue] = useState(0);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     let unmounted  = false;
@@ -117,7 +118,7 @@ export default function VerticalTab(props) {
     };
     fetchData();
     return() => {unmounted = true}
-  }, [onSubmitPersonal, onSubmitFinancial, totalcolumns]);
+  }, [onSubmitPersonal, onSubmitFinancial, totalcolumns, setProgress]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

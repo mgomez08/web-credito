@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Hidden, CircularProgress, Grid, Typography } from "@material-ui/core";
+import { Hidden, CircularProgress, Grid, Typography, SnackbarContent, Button } from "@material-ui/core";
 import HorizontalTab from "./HorizontalTab";
 import VerticalTab from "./VerticalTab";
 import { getAccessTokenApi } from "../../../../api/auth";
@@ -9,16 +9,26 @@ import {
   getPersonalInfoApi,
   saveFinancialInfoApi,
   getFinancialInfoApi,
+  saveFormProgressApi,
 } from "../../../../api/user";
 import "./InformationTabs.scss";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    flexDirection:'column',
+    alignItems: 'center',
     width: "auto",
     paddingLeft: "15px",
     paddingRight: "15px",
   },
+  snack: {
+    backgroundColor: '#4CAF50',
+    width: "auto",
+    marginBottom: '25px',
+    maxWidth: '550px',
+  }
 }));
 export default function InformationTabs() {
   const [userFinancialData, setUserFinancialData] = useState(null);
@@ -71,11 +81,15 @@ function Tabs(props) {
   const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
   const [message, setMessage] = useState("");
+  const [progress, setProgress] = useState(0);
 
   var totalcolumns = {
     total: 32,
     difference: 3,
   };
+  const action = (<Button variant="contained" color="secondary" size="small">
+  Calcular Scoring
+</Button>);
   const validcreditinstitution = () => {
     if (userFinancialData?.havecredits == null) {
       return false;
@@ -135,6 +149,7 @@ function Tabs(props) {
       setMessage(result.message);
       setOpenError(true);
     } else {
+      await saveFormProgressApi({progress},getAccessTokenApi());
       setOpen(true);
     }
     window.scroll(0, 0);
@@ -153,12 +168,15 @@ function Tabs(props) {
       setMessage(result.message);
       setOpenError(true);
     } else {
+      await saveFormProgressApi({progress},getAccessTokenApi());
       setOpen(true);
     }
     window.scroll(0, 0);
   };
   return (
     <div className={classes.root}>
+    { progress === 100 && 
+    (<SnackbarContent className={classes.snack} message="Completaste tu información, haz click en el botón para calcular tu puntaje." action={action}/>) }
       <Hidden mdUp>
         <HorizontalTab
           userPersonalData={userPersonalData}
@@ -167,6 +185,8 @@ function Tabs(props) {
           setUserFinancialData={setUserFinancialData}
           onSubmitPersonal={onSubmitPersonal}
           onSubmitFinancial={onSubmitFinancial}
+          progress={progress}
+          setProgress={setProgress}
           open={open}
           setOpen={setOpen}
           openError={openError}
@@ -183,6 +203,8 @@ function Tabs(props) {
           setUserFinancialData={setUserFinancialData}
           onSubmitPersonal={onSubmitPersonal}
           onSubmitFinancial={onSubmitFinancial}
+          progress={progress}
+          setProgress={setProgress}
           open={open}
           setOpen={setOpen}
           openError={openError}
