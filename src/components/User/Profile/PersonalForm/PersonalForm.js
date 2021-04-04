@@ -46,9 +46,9 @@ export default function PersonalForm(props) {
         setUserPersonalData({
           ...userPersonalData,
           [`datebirth`]: e._d,
-          [`age`]: yearsDiff
+          [`age`]: yearsDiff,
         });
-        reset({ age:  yearsDiff});
+        reset({ ...userPersonalData, age: yearsDiff });
       }
     } catch (error) {}
   };
@@ -695,6 +695,9 @@ export default function PersonalForm(props) {
           <Alert onClose={handleClose} variant="filled" severity="success">
             Información Personal Guardada.
           </Alert>
+          {/* <Alert onClose={handleClose} variant="filled" severity="success">
+            Ya Puede calcular su Scoring
+          </Alert> */}
         </Snackbar>
       </Grid>
     </form>

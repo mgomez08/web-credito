@@ -40,10 +40,10 @@ export default function FinancialForm(props) {
         const yearsDiff = moment().diff(e, "years", false);
         setUserFinancialData({
           ...userFinancialData,
-          [`datecurrentjob`]: e._d,
           [`yearsexperience`]: yearsDiff,
+          [`datecurrentjob`]: e._d,
         });
-        reset({ yearsexperience: yearsDiff});
+        reset({ ...userFinancialData, yearsexperience: yearsDiff });
       }
     } catch (error) {}
   };
@@ -74,7 +74,7 @@ export default function FinancialForm(props) {
         justify="space-between"
         alignItems="center"
         spacing={4}
-      > 
+      >
         <Grid item xs={12} lg={6}>
           <KeyboardDatePicker
             fullWidth={true}

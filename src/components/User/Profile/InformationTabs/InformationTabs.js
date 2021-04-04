@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Hidden, CircularProgress, Grid, Typography, SnackbarContent, Button } from "@material-ui/core";
+import {
+  Hidden,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 import HorizontalTab from "./HorizontalTab";
 import VerticalTab from "./VerticalTab";
 import { getAccessTokenApi } from "../../../../api/auth";
@@ -12,30 +21,33 @@ import {
   saveFormProgressApi,
 } from "../../../../api/user";
 import "./InformationTabs.scss";
+import { ProgressCircular } from "../../../Content/ProgressCircular";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    display: 'flex',
-    flexDirection:'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     width: "auto",
     paddingLeft: "15px",
     paddingRight: "15px",
   },
   snack: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: "#4CAF50",
     width: "auto",
-    marginBottom: '25px',
-    maxWidth: '550px',
-  }
+    marginBottom: "25px",
+    maxWidth: "550px",
+  },
+  link: {
+    textDecoration: "none",
+  },
 }));
 export default function InformationTabs() {
   const [userFinancialData, setUserFinancialData] = useState(null);
   const [userPersonalData, setUserPersonalData] = useState(null);
 
   useEffect(() => {
-
     const fetchData = async () => {
       const personalData = await getPersonalInfoApi(getAccessTokenApi());
       const financialData = await getFinancialInfoApi(getAccessTokenApi());
@@ -53,23 +65,13 @@ export default function InformationTabs() {
       setUserFinancialData={setUserFinancialData}
     />
   ) : (
-    <Grid container direction="column" justify="center" alignItems="center">
-      <Typography
-        variant="h4"
-        align="center"
-        color="secondary"
-        style={{ padding: 30 }}
-      >
-        Cargando su información, por favor espere un momento
-      </Typography>
-      <CircularProgress
-        color="secondary"
-        size={100}
-        style={{ marginBottom: 200 }}
-      />
-    </Grid>
+    <ProgressCircular
+      variantMessage="h4"
+      message="Cargando su información, por favor espere un momento"
+    />
   );
 }
+
 function Tabs(props) {
   const {
     userPersonalData,
@@ -79,6 +81,7 @@ function Tabs(props) {
   } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [openError, setOpenError] = useState(false);
   const [message, setMessage] = useState("");
   const [progress, setProgress] = useState(0);
@@ -87,9 +90,6 @@ function Tabs(props) {
     total: 32,
     difference: 3,
   };
-  const action = (<Button variant="contained" color="secondary" size="small">
-  Calcular Scoring
-</Button>);
   const validcreditinstitution = () => {
     if (userFinancialData?.havecredits == null) {
       return false;
@@ -127,6 +127,14 @@ function Tabs(props) {
   validcreditinstitution();
   validsavingsaccounts();
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    window.scroll(0, 0);
+  };
+
   const onSubmitFinancial = async (data, e) => {
     setUserFinancialData({
       ...userFinancialData,
@@ -149,8 +157,11 @@ function Tabs(props) {
       setMessage(result.message);
       setOpenError(true);
     } else {
-      await saveFormProgressApi({progress},getAccessTokenApi());
+      await saveFormProgressApi({ progress }, getAccessTokenApi());
       setOpen(true);
+      if (progress === 100) {
+        handleOpenModal();
+      }
     }
     window.scroll(0, 0);
   };
@@ -168,15 +179,48 @@ function Tabs(props) {
       setMessage(result.message);
       setOpenError(true);
     } else {
-      await saveFormProgressApi({progress},getAccessTokenApi());
+      await saveFormProgressApi({ progress }, getAccessTokenApi());
       setOpen(true);
+      console.log(progress);
+      if (progress === 100) {
+        handleOpenModal();
+      }
     }
+    console.log(progress);
     window.scroll(0, 0);
   };
   return (
     <div className={classes.root}>
-    { progress === 100 && 
-    (<SnackbarContent className={classes.snack} message="Completaste tu información, haz click en el botón para calcular tu puntaje." action={action}/>) }
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Información completada"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
+            blanditiis tenetur unde suscipit, quam beatae rerum inventore
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            onClick={handleCloseModal}
+            color="primary"
+          >
+            Ahora no
+          </Button>
+          <Link to="calcular-scoring" className={classes.link}>
+            <Button variant="contained" color="secondary">
+              Calcular Scoring
+            </Button>
+          </Link>
+        </DialogActions>
+      </Dialog>
       <Hidden mdUp>
         <HorizontalTab
           userPersonalData={userPersonalData}
