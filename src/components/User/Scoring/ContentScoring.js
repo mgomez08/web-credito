@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Grid, Typography, SnackbarContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { calculateScoringApi, getFormProgressApi } from "../../../api/user";
+import {
+  calculateScoringApi,
+  getFormProgressApi,
+  getScoringApi,
+} from "../../../api/user";
 import { getAccessTokenApi } from "../../../api/auth";
 import { ProgressCircular } from "../../Content/ProgressCircular";
 
@@ -34,6 +38,16 @@ export default function ContentScoring() {
   const [showScoring, setShowScoring] = useState(false);
   const [valueScoring, setValueScoring] = useState();
 
+  useEffect(() => {
+    const fetchScoring = async () => {
+      const { scoring } = await getScoringApi(getAccessTokenApi());
+      if (scoring !== null) {
+        setValueScoring(scoring);
+        setShowScoring(true);
+      }
+    };
+    fetchScoring();
+  }, []);
   const verifyFormProgress = async () => {
     setValueScoring("");
     setShowScoring(false);
@@ -52,7 +66,7 @@ export default function ContentScoring() {
     if (result) {
       setTimeout(() => {
         setShowCircularProgress(false);
-        setValueScoring(result.message);
+        setValueScoring(result.scoring);
         setShowScoring(true);
         setShowButton(true);
       }, 1500);
@@ -95,7 +109,7 @@ export default function ContentScoring() {
           variant="h5"
           className={classes.scoring}
         >
-          {valueScoring}
+          {`Su scoring tiene un valor de: ${valueScoring}`}
         </Typography>
       ) : (
         ""

@@ -17,8 +17,8 @@ export default function Scoring() {
   const classes = useStyles();
   return (
     <Grid container justify="center" alignItems="center" className="profile">
-      <Grid item xs={false} md={1} />
-      <Grid item xs={12} md={10}>
+      <Grid item xs={1} md={1} />
+      <Grid item xs={10} md={10}>
         <Typography color="initial" align="center" variant="h2">
           Calcule su Puntaje Scoring
         </Typography>
@@ -33,7 +33,7 @@ export default function Scoring() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={false} md={1} />
+      <Grid item xs={1} md={1} />
     </Grid>
   );
 }
