@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid, Typography, SnackbarContent } from "@material-ui/core";
+import { Grid, Typography, SnackbarContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   calculateScoringApi,
   getFormProgressApi,
   getScoringApi,
+  getScoringInfoApi,
+  saveScoringInfoApi,
 } from "../../../api/user";
 import { getAccessTokenApi } from "../../../api/auth";
 import { ProgressCircular } from "../../Content/ProgressCircular";
-
-// const action = (
-//   <Button color="secondary" size="small">
-//     lorem ipsum dolorem
-//   </Button>
-// );
+import { FormScoring } from "./FormScoring";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 600,
@@ -37,44 +34,68 @@ export default function ContentScoring() {
   const [showCircularProgress, setShowCircularProgress] = useState(false);
   const [showScoring, setShowScoring] = useState(false);
   const [valueScoring, setValueScoring] = useState();
+  const [scoringForm, setScoringForm] = useState(null);
 
   useEffect(() => {
-    const fetchScoring = async () => {
+    const fetchScoringData = async () => {
       const { scoring } = await getScoringApi(getAccessTokenApi());
       if (scoring !== null) {
         setValueScoring(scoring);
         setShowScoring(true);
       }
+      const { scoringData } = await getScoringInfoApi(getAccessTokenApi());
+      setScoringForm(scoringData);
     };
-    fetchScoring();
+    fetchScoringData();
   }, []);
-  const verifyFormProgress = async () => {
+
+  const onSubmitScoring = async (data, e) => {
+    e.preventDefault();
     setValueScoring("");
     setShowScoring(false);
     setShowButton(false);
-    const { progress } = await getFormProgressApi(getAccessTokenApi());
+    const token = await getAccessTokenApi();
+    const { progress } = await getFormProgressApi(token);
     if (progress !== 100) {
       setShowAlert(true);
       setShowButton(true);
     } else {
-      calculateScoring();
-    }
-  };
-  const calculateScoring = async () => {
-    setShowCircularProgress(true);
-    const result = await calculateScoringApi(getAccessTokenApi());
-    if (result) {
-      setTimeout(() => {
+      setShowCircularProgress(true);
+      if (scoringForm.havecredits === "No") {
+        scoringForm.amountcreditacquired = null;
+        scoringForm.dayspastdue = null;
+      }
+      const result = await saveScoringInfoApi(scoringForm, token);
+      if (result.message) {
         setShowCircularProgress(false);
-        setValueScoring(result.scoring);
+        setValueScoring(result.message);
         setShowScoring(true);
         setShowButton(true);
-      }, 1500);
+      } else {
+        const data = await calculateScoringApi(getAccessTokenApi());
+        if (!data.message) {
+          setShowCircularProgress(false);
+          setValueScoring(data.scoring);
+          setShowScoring(true);
+          setShowButton(true);
+        } else {
+          setShowCircularProgress(false);
+          setValueScoring(data.message);
+          setShowScoring(true);
+          setShowButton(true);
+        }
+      }
     }
   };
 
   const classes = useStyles();
-  return (
+
+  return !scoringForm ? (
+    <ProgressCircular
+      variantMessage="h4"
+      message="Cargando su información, por favor espere un momento"
+    />
+  ) : (
     <Grid container direction="column" justify="center" alignItems="center">
       <Typography color="initial" align="justify" variant="body1">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
@@ -82,6 +103,12 @@ export default function ContentScoring() {
         consectetur, neque doloribus, cupiditate numquam dignissimos laborum
         fugiat deleniti? Eum quasi quidem quibusdam.
       </Typography>
+      <FormScoring
+        scoringForm={scoringForm}
+        setScoringForm={setScoringForm}
+        onSubmitScoring={onSubmitScoring}
+        showButton={showButton}
+      />
       {showAlert ? (
         <div className={classes.root}>
           <SnackbarContent
@@ -111,18 +138,6 @@ export default function ContentScoring() {
         >
           {`Su scoring tiene un valor de: ${valueScoring}`}
         </Typography>
-      ) : (
-        ""
-      )}
-      {showButton ? (
-        <Button
-          onClick={verifyFormProgress}
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-        >
-          Calcular Scoring
-        </Button>
       ) : (
         ""
       )}

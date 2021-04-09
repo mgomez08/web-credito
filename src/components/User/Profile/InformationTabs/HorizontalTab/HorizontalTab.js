@@ -89,24 +89,20 @@ export default function HorizontalTab(props) {
 
   const [value, setValue] = useState(0);
   useEffect(() => {
-    let unmounted  = false;
+    let unmounted = false;
     const fetchData = async () => {
       const columnsNulls = await getColumnsNullsApi(getAccessTokenApi());
-      if(!unmounted){
-      setProgress(
-        (totalcolumns.total -
-          (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
-          (100 / totalcolumns.total) >
-          100
-          ? 100
-          : (totalcolumns.total -
-              (columnsNulls.columnsNulls[0].value - totalcolumns.difference)) *
-              (100 / totalcolumns.total)
-         );
+      if (!unmounted) {
+        setProgress(
+          (totalcolumns - columnsNulls.columnsNulls[0].value) *
+            (100 / totalcolumns)
+        );
       }
     };
     fetchData();
-    return() => {unmounted = true}
+    return () => {
+      unmounted = true;
+    };
   }, [onSubmitPersonal, onSubmitFinancial, totalcolumns, setProgress]);
   const handleChange = (event, newValue) => {
     setValue(newValue);

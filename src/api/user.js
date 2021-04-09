@@ -202,6 +202,47 @@ export function getFormProgressApi(token) {
       return err.message;
     });
 }
+export function saveScoringInfoApi(data, token) {
+  const url = `${basePath}/${apiVersion}/save-scoring-info`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
+export function getScoringInfoApi(token) {
+  const url = `${basePath}/${apiVersion}/get-scoring-info`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err.message;
+    });
+}
 export function calculateScoringApi(token) {
   const url = `${basePath}/${apiVersion}/calculate-scoring`;
   const params = {

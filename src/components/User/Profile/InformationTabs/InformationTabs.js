@@ -86,46 +86,7 @@ function Tabs(props) {
   const [message, setMessage] = useState("");
   const [progress, setProgress] = useState(0);
 
-  var totalcolumns = {
-    total: 32,
-    difference: 3,
-  };
-  const validcreditinstitution = () => {
-    if (userFinancialData?.havecredits == null) {
-      return false;
-    } else if (userFinancialData.havecredits === "Si") {
-      totalcolumns = {
-        total: totalcolumns.total + 2,
-        difference: totalcolumns.difference - 2,
-      };
-      return true;
-    } else if (userFinancialData.havecredits === "No") {
-      totalcolumns = {
-        total: totalcolumns.total - 2 < 33 ? 33 : totalcolumns.total - 2,
-        difference: totalcolumns.difference,
-      };
-      return false;
-    }
-  };
-  const validsavingsaccounts = () => {
-    if (userFinancialData?.havesavingsaccount == null) {
-      return false;
-    } else if (userFinancialData.havesavingsaccount === "Si") {
-      totalcolumns = {
-        total: totalcolumns.total + 1,
-        difference: totalcolumns.difference - 1,
-      };
-      return true;
-    } else if (userFinancialData.havesavingsaccount === "No") {
-      totalcolumns = {
-        total: totalcolumns.total - 1 < 33 ? 33 : totalcolumns.total - 1,
-        difference: totalcolumns.difference,
-      };
-      return false;
-    }
-  };
-  validcreditinstitution();
-  validsavingsaccounts();
+  const totalcolumns = 30;
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -140,14 +101,6 @@ function Tabs(props) {
       ...userFinancialData,
       data,
     });
-
-    if (userFinancialData.havecredits === "No") {
-      userFinancialData.amountcreditacquired = null;
-      userFinancialData.bankentity = null;
-    }
-    if (userFinancialData.havesavingsaccount === "No") {
-      userFinancialData.bankentityaccounts = null;
-    }
 
     const result = await saveFinancialInfoApi(
       userFinancialData,
