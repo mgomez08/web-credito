@@ -223,11 +223,24 @@ export default function FinancialForm(props) {
               })}
             >
               <option aria-label="None" />
-              <option value={"1"}>Menor a 5.000.000 Pesos Colombianos</option>
-              <option value={"2"}>
-                Entre 5.000.001 y 10.000.000 Pesos Colombianos
+              <option value={"1"}>
+                Menor o Igual a 10.000.000 Pesos Colombianos
               </option>
-              <option value={"3"}>Mayor a 10.000.001 Pesos Colombianos</option>
+              <option value={"2"}>
+                Entre 10.000.001 y 20.000.000 Pesos Colombianos
+              </option>
+              <option value={"3"}>
+                Entre 20.000.001 y 40.000.000 Pesos Colombianos
+              </option>
+              <option value={"4"}>
+                Entre 40.000.001 y 60.000.000 Pesos Colombianos
+              </option>
+              <option value={"5"}>
+                Entre 60.000.001 y 80.000.000 Pesos Colombianos
+              </option>
+              <option value={"6"}>
+                Entre 80.000.001 y 100.000.000 Pesos Colombianos
+              </option>
             </Select>
           </FormControl>
           <Typography

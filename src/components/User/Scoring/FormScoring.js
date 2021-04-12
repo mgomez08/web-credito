@@ -4,7 +4,6 @@ import {
   FormControl,
   InputLabel,
   Select,
-  TextField,
   Grid,
   Typography,
 } from "@material-ui/core";
@@ -62,7 +61,7 @@ export const FormScoring = ({
               })}
             >
               <option aria-label="None" />
-              <option value={"Sí"}>Sí</option>
+              <option value={"Si"}>Si</option>
               <option value={"No"}>No</option>
             </Select>
           </FormControl>
@@ -75,26 +74,45 @@ export const FormScoring = ({
             {errors?.havecredits?.message}
           </Typography>
         </Grid>
-        {scoringForm.havecredits === "Sí" ? (
+        {scoringForm.havecredits === "Si" ? (
           <>
             <Grid item xs={12} lg={6}>
-              <TextField
-                label="¿Entre qué rangos de precios está el crédito que adquirió?"
+              <FormControl
                 variant="outlined"
                 color="secondary"
-                fullWidth
-                type="number"
-                name="amountcreditacquired"
-                onChange={handleChange}
-                defaultValue={scoringForm.amountcreditacquired}
-                inputRef={register({
-                  required: { value: true, message: "Campo obligatorio" },
-                  pattern: {
-                    value: /^[^.,-]?\d+$/i,
-                    message: "Solo puede ingresar números enteros y positivos.",
-                  },
-                })}
-              />
+                fullWidth={true}
+              >
+                <InputLabel htmlFor="amountcreditacquired">
+                  ¿Entre qué rangos de precios está el crédito adquirido?
+                </InputLabel>
+                <Select
+                  native
+                  name="amountcreditacquired"
+                  label="¿Entre qué rangos de precios está el crédito adquirido?"
+                  onChange={handleChange}
+                  defaultValue={scoringForm.amountcreditacquired}
+                  inputRef={register({
+                    required: { value: true, message: "Campo obligatorio" },
+                  })}
+                >
+                  <option aria-label="None" />
+                  <option value={"1"}>
+                    Menor a 5.000.000 Pesos Colombianos
+                  </option>
+                  <option value={"2"}>
+                    Entre 5.000.001 y 10.000.000 Pesos Colombianos
+                  </option>
+                  <option value={"3"}>
+                    Entre 10.000.001 y 20.000.000 Pesos Colombianos
+                  </option>
+                  <option value={"4"}>
+                    Entre 20.000.001 y 30.000.000 Pesos Colombianos
+                  </option>
+                  <option value={"5"}>
+                    Entre 30.000.001 y 40.000.000 Pesos Colombianos
+                  </option>
+                </Select>
+              </FormControl>
               <Typography
                 variant="body1"
                 display="block"
