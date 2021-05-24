@@ -32,7 +32,7 @@ export const AppRouter = () => {
   } else {
     return (
       <Router>
-        <div>
+        <>
           {user ? <LayoutUser /> : <LayoutBasic />}
           <Switch>
             <PublicRoute exact path="/" component={Home} isLoggedIn={!!user} />
@@ -52,7 +52,7 @@ export const AppRouter = () => {
             <Route component={Error404} />
           </Switch>
           <Footer />
-        </div>
+        </>
       </Router>
     );
   }

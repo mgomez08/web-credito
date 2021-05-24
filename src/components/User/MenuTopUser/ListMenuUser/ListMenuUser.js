@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import PersonPinIcon from "@material-ui/icons/PersonPin";
 import ScoreIcon from "@material-ui/icons/Score";
 import PersonIcon from "@material-ui/icons/Person";
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import { logout } from "../../../../api/auth";
 import "./ListMenuUser.scss";
 
@@ -35,6 +36,14 @@ export default function ListMenuUser(props) {
               <ScoreIcon />
             </ListItemIcon>
             <ListItemText primary="Scoring" />
+          </ListItem>
+        </Link>
+        <Link to="/banks">
+          <ListItem button onClick={props.handleDrawerClose}>
+            <ListItemIcon>
+              <AccountBalanceIcon />
+            </ListItemIcon>
+            <ListItemText primary="Bancos" />
           </ListItem>
         </Link>
       </List>
