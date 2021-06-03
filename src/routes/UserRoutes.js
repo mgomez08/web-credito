@@ -5,6 +5,7 @@ import Home from "../pages/Home/Home";
 import Profile from "../pages/Profile/Profile";
 import Scoring from "../pages/Scoring/Scoring";
 import Banks from "../pages/Banks/Banks";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
 
 export const UserRoutes = () => {
   return (
@@ -14,6 +15,7 @@ export const UserRoutes = () => {
         <Route exact path="/perfil" component={Profile} />
         <Route exact path="/calcular-scoring" component={Scoring} />
         <Route exact path="/banks" component={Banks} />
+        <Route exact path="/changepassword" component={ChangePassword} />
         <Route component={Error404} />
       </Switch>
     </>

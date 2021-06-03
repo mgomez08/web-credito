@@ -10,9 +10,9 @@ import {
   TextField,
   Typography,
   Snackbar,
+  InputAdornment,
+  IconButton,
 } from "@material-ui/core";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Alert from "@material-ui/lab/Alert";
@@ -226,7 +226,8 @@ export default function FormRegister() {
               required: { value: true, message: "Campo obligatorio" },
               /* eslint-disable-next-line */
               pattern: {
-                value: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
+                value:
+                  /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
                 message: "El correo electrónico ingresado no es valido",
               },
             })}
@@ -398,7 +399,12 @@ export default function FormRegister() {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Typography align="center" variant="h6" color="initial" onClick={window.scroll(0, 0)}>
+            <Typography
+              align="center"
+              variant="h6"
+              color="initial"
+              onClick={window.scroll(0, 0)}
+            >
               ¿Ya estás registrado? <Link to="/login">Inicia sesión aquí</Link>
             </Typography>
           </Grid>

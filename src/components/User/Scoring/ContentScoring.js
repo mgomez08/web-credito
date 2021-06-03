@@ -98,10 +98,8 @@ export default function ContentScoring() {
   ) : (
     <Grid container direction="column" justify="center" alignItems="center">
       <Typography color="initial" align="justify" variant="body1">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-        blanditiis tenetur unde suscipit, quam beatae rerum inventore
-        consectetur, neque doloribus, cupiditate numquam dignissimos laborum
-        fugiat deleniti? Eum quasi quidem quibusdam.
+        Complete la información de los campos y oprime el botón "calcular.
+        scoring"
       </Typography>
       <FormScoring
         scoringForm={scoringForm}

@@ -11,6 +11,7 @@ import PersonPinIcon from "@material-ui/icons/PersonPin";
 import ScoreIcon from "@material-ui/icons/Score";
 import PersonIcon from "@material-ui/icons/Person";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { logout } from "../../../../api/auth";
 import "./ListMenuUser.scss";
 
@@ -44,6 +45,14 @@ export default function ListMenuUser(props) {
               <AccountBalanceIcon />
             </ListItemIcon>
             <ListItemText primary="Bancos" />
+          </ListItem>
+        </Link>
+        <Link to="/changepassword">
+          <ListItem button onClick={props.handleDrawerClose}>
+            <ListItemIcon>
+              <VpnKeyIcon />
+            </ListItemIcon>
+            <ListItemText primary="Cambiar Contraseña" />
           </ListItem>
         </Link>
       </List>

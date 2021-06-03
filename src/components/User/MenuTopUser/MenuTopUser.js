@@ -74,6 +74,12 @@ export default function MenuTopUser(props) {
             >
               Bancos
             </Link>
+            <Link
+              className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit"
+              to="/changepassword"
+            >
+              Cambiar Contraseña
+            </Link>
             <Button
               href="/login"
               color="inherit"

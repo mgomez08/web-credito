@@ -54,6 +54,39 @@ export function signInApi(data) {
     });
 }
 
+export function changePasswordApi(data, token) {
+  const url = `${basePath}/${apiVersion}/change-password`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      if (result.ok) {
+        return {
+          ok: true,
+          message: result.message,
+        };
+      } else {
+        return {
+          ok: false,
+          message: result.message,
+        };
+      }
+    })
+    .catch((err) => {
+      return {
+        message: err.message,
+      };
+    });
+}
 export function savePersonalInfoApi(data, token) {
   const url = `${basePath}/${apiVersion}/save-personal-info`;
   const params = {
