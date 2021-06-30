@@ -19,8 +19,8 @@ import { useForm } from "react-hook-form";
 
 export default function FormLogin() {
   const { register, errors, handleSubmit } = useForm();
-  const [openSuccess, setOpenSuccess] = React.useState(false);
-  const [openError, setOpenError] = React.useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
   const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [inputs, setInputs] = useState({
@@ -36,7 +36,7 @@ export default function FormLogin() {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+  
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -66,7 +66,7 @@ export default function FormLogin() {
       window.location.href = "/user";
     }
   };
-
+  
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid
@@ -76,7 +76,7 @@ export default function FormLogin() {
         alignItems="center"
         spacing={3}
         className="form-login"
-      >
+        >
         <Grid item xs={12}>
           <TextField
             label="Correo Electrónico"

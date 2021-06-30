@@ -19,13 +19,14 @@ import Alert from "@material-ui/lab/Alert";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { signUpApi } from "../../../api/user";
 import "./FormRegister.scss";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 export default function FormRegister() {
   const { register, errors, handleSubmit } = useForm();
-  const [openSuccess, setOpenSuccess] = React.useState(false);
-  const [openError, setOpenError] = React.useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const [openError, setOpenError] = useState(false);
   const [message, setMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [inputs, setInputs] = useState({
@@ -40,6 +41,12 @@ export default function FormRegister() {
     privacyPolicy: false,
     showPassword: false,
   });
+  if(redirect){
+    return <Redirect to={{
+      pathname: "/login",
+      state: {register: true}
+    }} />;
+  }
   const handleChange = (e) => {
     if (e.target.type === "checkbox") {
       setInputs({
@@ -87,6 +94,7 @@ export default function FormRegister() {
         setInputs({
           privacyPolicy: false,
         });
+        setRedirect(true);
       }
     }
   };
