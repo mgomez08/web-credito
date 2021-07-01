@@ -64,14 +64,15 @@ export default function MenuTop(props) {
             <Link className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit" to="/login">
             Iniciar Sesión
             </Link>
+            <Link className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit" to="/register">
             <Button
-              href="/register"
               color="inherit"
               variant="outlined"
               endIcon={<ArrowForwardIosIcon />}
-            >
+              >
               Regístrate
             </Button>
+            </Link>
           </Hidden>
           <Hidden mdUp>
             <IconButton
