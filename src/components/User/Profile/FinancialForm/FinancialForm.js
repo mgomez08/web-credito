@@ -133,6 +133,10 @@ export default function FinancialForm(props) {
             defaultValue={userFinancialData.workposition}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              maxLength: {
+                value: 60,
+                message: "Solo se aceptan 60 caracteres como máximo.",
+              },
               pattern: {
                 value: /^([a-z ñáéíóú])+$/i,
                 message: "Solo puede ingresar letras en el cargo que desempeña",

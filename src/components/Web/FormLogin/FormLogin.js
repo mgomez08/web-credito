@@ -63,7 +63,7 @@ export default function FormLogin() {
       localStorage.setItem(REFRESH_TOKEN, refreshToken);
       setMessage("Login correcto, redirigiendo");
       handleClick("success");
-      window.location.href = "/user";
+      window.location.href = "/";
     }
   };
   

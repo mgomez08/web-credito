@@ -265,6 +265,10 @@ export default function FormRegister() {
                 value: 10,
                 message: "El número de celular debe tener mínimo 10 digitos",
               },
+              maxLength: {
+                value: 10,
+                message: "El número de celular debe tener máxima 10 digitos",
+              },
               pattern: {
                 value: /^[^.,-]?\d+$/i,
                 message: "Solo puede ingresar números enteros y positivos.",

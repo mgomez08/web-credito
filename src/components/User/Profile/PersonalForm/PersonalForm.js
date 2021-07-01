@@ -293,6 +293,10 @@ export default function PersonalForm(props) {
                 value: 10,
                 message: "El número de celular debe tener mínimo 10 digitos",
               },
+              maxLength: {
+                value: 10,
+                message: "El número de celular debe tener máximo 10 digitos",
+              },
               pattern: {
                 value: /^[^.,-]?\d+$/i,
                 message: "Solo puede ingresar números enteros y positivos.",
@@ -422,6 +426,10 @@ export default function PersonalForm(props) {
             defaultValue={userPersonalData.profession}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              maxLength: {
+                value: 60,
+                message: "Solo se aceptan 60 caracteres como máximo.",
+              },
               pattern: {
                 value: /^([a-z ñáéíóú])+$/i,
                 message: "Solo puede ingresar letras en su profesión",
@@ -449,6 +457,10 @@ export default function PersonalForm(props) {
             defaultValue={userPersonalData.occupation}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              maxLength: {
+                value: 60,
+                message: "Solo se aceptan 60 caracteres como máximo.",
+              },
               pattern: {
                 value: /^([a-z ñáéíóú])+$/i,
                 message: "Solo puede ingresar letras en su ocupación",
@@ -629,6 +641,10 @@ export default function PersonalForm(props) {
             defaultValue={userPersonalData.homeaddress}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              maxLength: {
+                value: 30,
+                message: "Solo se aceptan 30 caracteres como máximo.",
+              },
             })}
           />
           <Typography
