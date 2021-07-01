@@ -25,7 +25,6 @@ export default function Home() {
         direction="row"
         justify="center"
         alignItems="center"
-        className="profile"
       >
         <Grid item xs={1} md={1} />
         <Grid item xs={10} md={10}>

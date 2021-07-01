@@ -13,13 +13,16 @@ export default function ChangePassword() {
         alignItems: "center",
       },
     },
+    title: { 
+      paddingBottom: theme.spacing(2),
+    }
   }));
   const classes = useStyles();
   return (
-    <Grid container justify="center" alignItems="center" className="profile">
+    <Grid container justify="center" alignItems="center">
       <Grid item xs={1} md={1} />
       <Grid item xs={10} md={10}>
-        <Typography color="initial" align="center" variant="h2">
+        <Typography color="initial" align="center" variant="h2" className={classes.title}>
           Cambie su contraseña
         </Typography>
         <Grid

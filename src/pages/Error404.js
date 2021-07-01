@@ -32,7 +32,7 @@ export default function Error404() {
   }));
   const classes = useStyles();
   return (
-    <Grid container justify="center" alignItems="center" className="profile">
+    <Grid container justify="center" alignItems="center">
       <Grid item xs={1} md={1} />
       <Grid item xs={10} md={10} className={classes.center}>
         <Hidden smDown>

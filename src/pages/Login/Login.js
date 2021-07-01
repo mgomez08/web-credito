@@ -3,11 +3,20 @@ import FormLogin from "../../components/Web/FormLogin";
 import { Grid, Typography, Snackbar } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import { getAccessTokenApi } from "../../api/auth";
+import { makeStyles } from "@material-ui/styles";
 import Alert from "@material-ui/lab/Alert";
-import "./Login.scss";
 
+
+const useStyles = makeStyles((theme) => ({
+  title: { 
+    paddingBottom: theme.spacing(2),
+  }
+}))
 
 export default function Login(props) {
+
+  const classes = useStyles();
+
   const sinceRegister = props.location.state;
   const [open, setOpen] = useState(false);
 
@@ -21,14 +30,13 @@ export default function Login(props) {
   const handleClose = () => {
     setOpen(false);
   }
+
   return (
-    <>
       <Grid
         container
         direction="row"
         justify="center"
         alignItems="center"
-        className="form-title"
       >
         <Grid item xs={1} />
         <Grid item xs={10}>
@@ -38,7 +46,7 @@ export default function Login(props) {
             justify="center"
             alignItems="center"
           >
-            <Grid item>
+            <Grid item className={classes.title}>
               <Typography align="center" color="initial" variant="h2">
                 Inicia Sesión en MiCrédito
               </Typography>
@@ -60,7 +68,5 @@ export default function Login(props) {
           </Alert>
         </Snackbar>
       </Grid>
-
-    </>
   );
 }

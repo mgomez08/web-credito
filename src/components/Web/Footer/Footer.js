@@ -1,13 +1,23 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
 import Info from "./Info";
 import NavigationFooter from "./NavigationFooter";
 import ContactFooter from "./ContactFooter";
+
 import "./Footer.scss";
 
+const useStyles = makeStyles((theme) => ({
+  sticky: {
+    padding: theme.spacing(3, 2),
+    marginTop: 'auto',
+  },
+}));
+
 export default function Footer() {
+  const classes = useStyles();
   return (
-    <footer className="footer">
+    <footer className={classes.sticky+' footer'}>
       <Grid container direction="row" justify="center" alignItems="center">
         <Grid item xs={2}></Grid>
         <Grid item xs={8}>
