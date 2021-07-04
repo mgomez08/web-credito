@@ -155,8 +155,7 @@ function Tabs(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-            blanditiis tenetur unde suscipit, quam beatae rerum inventore
+            Ahora puede calcular su puntaje scoring haciendo en el botón "Calcular Scoring".
           </DialogContentText>
         </DialogContent>
         <DialogActions>

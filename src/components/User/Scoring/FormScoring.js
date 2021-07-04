@@ -144,9 +144,9 @@ export const FormScoring = ({
                 >
                   <option aria-label="None" />
                   <option value={0}>0 días</option>
-                  <option value={1}>1 - 30 días</option>
-                  <option value={2}>31 - 60 días</option>
-                  <option value={3}>61 - 90 días</option>
+                  <option value={1}>1 - 45 días</option>
+                  <option value={2}>46 - 90 días</option>
+                  <option value={3}>91 - 120 días</option>
                 </Select>
               </FormControl>
               <Typography

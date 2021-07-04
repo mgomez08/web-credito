@@ -31,9 +31,7 @@ export default function Scoring() {
           justify="center"
           className={classes.content}
         >
-          <Grid item>
             <ContentScoring />
-          </Grid>
         </Grid>
       </Grid>
       <Grid item xs={1} md={1} />

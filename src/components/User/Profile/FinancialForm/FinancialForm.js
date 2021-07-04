@@ -95,34 +95,6 @@ export default function FinancialForm(props) {
         </Grid>
         <Grid item xs={12} lg={6}>
           <TextField
-            label="Años de experiencia en el trabajo actual"
-            variant="outlined"
-            color="secondary"
-            fullWidth
-            disabled
-            type="number"
-            name="yearsexperience"
-            onChange={handleChange}
-            defaultValue={userFinancialData.yearsexperience}
-            inputRef={register({
-              required: { value: true, message: "Campo obligatorio" },
-              pattern: {
-                value: /^[^.,-]?\d+$/i,
-                message: "Solo puede ingresar números enteros y positivos.",
-              },
-            })}
-          />
-          <Typography
-            variant="body1"
-            display="block"
-            color="error"
-            gutterBottom
-          >
-            {errors?.yearsexperience?.message}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} lg={6}>
-          <TextField
             color="secondary"
             variant="outlined"
             fullWidth

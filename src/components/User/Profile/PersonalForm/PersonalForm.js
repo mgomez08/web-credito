@@ -312,7 +312,7 @@ export default function PersonalForm(props) {
             {errors?.tel?.message}
           </Typography>
         </Grid>
-        <Grid item xs={12} lg={6}>
+        {/* <Grid item xs={12} lg={6}>
           <TextField
             label="Edad"
             variant="outlined"
@@ -323,6 +323,7 @@ export default function PersonalForm(props) {
             disabled
             onChange={handleChange}
             defaultValue={userPersonalData.age}
+            InputLabelProps={{ shrink: true }}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
               pattern: {
@@ -343,7 +344,7 @@ export default function PersonalForm(props) {
           >
             {errors?.age?.message}
           </Typography>
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} lg={6}>
           <FormControl variant="outlined" color="secondary" fullWidth={true}>
             <InputLabel htmlFor="marital-status">Estado Civil</InputLabel>
@@ -448,7 +449,7 @@ export default function PersonalForm(props) {
         <Grid item xs={12} lg={6}>
           <TextField
             label="Ocupación"
-            helperText=" "
+            // helperText=" "
             variant="outlined"
             color="secondary"
             fullWidth
@@ -507,6 +508,7 @@ export default function PersonalForm(props) {
         <Grid item xs={12} lg={6}>
           <TextField
             label="Número de personas a cargo suyo"
+            helperText=" "
             variant="outlined"
             color="secondary"
             fullWidth
