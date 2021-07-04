@@ -26,7 +26,33 @@ const useStyles = makeStyles((theme) => ({
   scoring: {
     marginTop: theme.spacing(2),
   },
+  containerSnackbar: {
+    maxWidth: 600,
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+    marginTop: theme.spacing(6),
+  },
+  snackbarGreen: { 
+    backgroundColor: theme.palette.success.dark,
+  },
+  snackbarBlue: { 
+    backgroundColor: theme.palette.secondary.dark,
+  },
+  snackbarRed: { 
+    backgroundColor: theme.palette.error.dark,
+  },
+  textGreen: { 
+    color: theme.palette.success.main,
+  },
+  textBlue: { 
+    color: theme.palette.secondary.main,
+  },
+  textRed: { 
+    color: theme.palette.error.main,
+  }
 }));
+
 
 export default function ContentScoring() {
   const [showAlert, setShowAlert] = useState(false);
@@ -35,7 +61,7 @@ export default function ContentScoring() {
   const [showScoring, setShowScoring] = useState(false);
   const [valueScoring, setValueScoring] = useState();
   const [scoringForm, setScoringForm] = useState(null);
-
+ 
   useEffect(() => {
     const fetchScoringData = async () => {
       const { scoring } = await getScoringApi(getAccessTokenApi());
@@ -89,7 +115,7 @@ export default function ContentScoring() {
   };
 
   const classes = useStyles();
-
+  console.log(classes);
   return !scoringForm ? (
     <ProgressCircular
       variantMessage="h4"
@@ -128,14 +154,44 @@ export default function ContentScoring() {
         ""
       )}
       {showScoring ? (
+        <>
         <Typography
           color="initial"
           align="justify"
           variant="h5"
           className={classes.scoring}
         >
-          {`Su scoring tiene un valor de: ${valueScoring}`}
+          Su scoring tiene un valor de: <span className={
+            valueScoring > 69 ? classes.textGreen : valueScoring > 39 ? classes.textBlue : classes.textRed
+          }>{` ${valueScoring}`}</span>
         </Typography>
+
+        <div className={classes.containerSnackbar}>
+        <Typography
+          color="initial"
+          align="center"
+          variant="h5"
+          className={classes.scoring}
+        >
+          ¿Cómo interpretar su resultado?
+        </Typography>
+         <SnackbarContent className={classes.snackbarGreen}
+           message={
+             'Si su puntuje está en el intervalo de 70-100, la probabilidad de que una entidad financiera le niegue un crédito es baja.'
+           }
+         />
+         <SnackbarContent className={classes.snackbarBlue}
+           message={
+             'Si su puntuje está en el intervalo de 40-69, la probabilidad de que una entidad financiera le niegue un crédito es mediana'
+           }
+         />
+         <SnackbarContent className={classes.snackbarRed}
+           message={
+             'Si su puntuje está en el intervalo de 0-39, la probabilidad de que una entidad financiera le niegue un crédito es alta.'
+           }
+         />
+        </div>
+         </>
       ) : (
         ""
       )}
