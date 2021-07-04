@@ -1,6 +1,9 @@
 import React from "react";
 import { Typography, Grid, Hidden } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Toolimg from "../../assets/img/png/tool.png"
+import Calculateimg from "../../assets/img/png/calculate.png"
+import Bankimg from "../../assets/img/png/bank.png"
 
 export default function Home() {
   const useStyles = makeStyles((theme) => ({
@@ -15,6 +18,25 @@ export default function Home() {
     MuiInputLabelRoot: {
       marginRight: theme.spacing(2),
     },
+    containerImg:{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    toolSize: { 
+      width: '400px',
+      height: '180px',
+      minWidth: '250px',
+      minHeight: '150px',
+    },
+    calculateSize: { 
+      width: '350px',
+      height: '200px',
+    },
+    bankSize: { 
+      width: '220px',
+      height: '220px',
+    }
   }));
   const classes = useStyles();
 
@@ -81,8 +103,13 @@ export default function Home() {
                 elit.
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6}></Grid>
-            <Grid item xs={12} md={6}></Grid>
+            <Grid className={classes.containerImg} item xs={12} md={6}>
+                <img className={classes.toolSize} src={Toolimg} alt=""  />
+            </Grid>
+            <Hidden smDown>
+            <Grid className={classes.containerImg} item xs={12} md={6}>
+                <img className={classes.calculateSize} src={Calculateimg} alt=""  />
+            </Grid>
             <Grid item xs={12} md={6}>
               <Typography
                 variant="h4"
@@ -109,6 +136,38 @@ export default function Home() {
                 elit.
               </Typography>
             </Grid>
+            </Hidden>
+            <Hidden mdUp>
+            <Grid item xs={12} md={6}>
+              <Typography
+                variant="h4"
+                color="secondary"
+                style={{ paddingBottom: 15 }}
+              >
+                ¿Cómo lo hacemos?
+              </Typography>
+              <Typography
+                variant="body1"
+                color="initial"
+                align="justify"
+                style={{ paddingBottom: 15 }}
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent fringilla volutpat ultrices. Morbi pellentesque dolor
+                eget felis feugiat, ac molestie eros facilisis. Quisque semper
+                eu enim in rhoncus. Nam commodo volutpat laoreet. Quisque
+                lobortis ullamcorper felis sit amet viverra. Integer luctus
+                ultricies nibh eu cursus. Class aptent taciti sociosqu ad litora
+                torquent per conubia nostra, per inceptos himenaeos. Maecenas mi
+                nisi, efficitur nec semper varius, ultrices tincidunt dolor.
+                Quisque facilisis ac quam vel semper. Maecenas sodales pharetra
+                elit.
+              </Typography>
+            </Grid>
+            <Grid className={classes.containerImg} item xs={12} md={6}>
+                <img className={classes.calculateSize} src={Calculateimg} alt=""  />
+            </Grid>
+            </Hidden>
             <Grid item xs={12} md={6}>
               <Typography
                 variant="h4"
@@ -135,7 +194,9 @@ export default function Home() {
                 elit.
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6}></Grid>
+            <Grid className={classes.containerImg} item xs={12} md={6}>
+                <img className={classes.bankSize} src={Bankimg} alt=""  />
+            </Grid>
           </Grid>
         </Grid>
         <Grid item xs={1} md={1} />

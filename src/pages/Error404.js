@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { Grid, Typography, Hidden } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import img404 from "../assets/img/jpg/404img.jpg"
+import img404 from "../assets/img/png/404img.png"
 
 export default function Error404() {
   const useStyles = makeStyles((theme) => ({
     content: {
+      marginTop: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
         alignItems: "flex-start",
       },
@@ -23,8 +24,12 @@ export default function Error404() {
       justifyContent: "center",
     },
     imgSize:{
-      width: "350px",
-      height: "350px",
+      width: "80%",
+      height: "50%",
+      maxWidth: "500px",
+      maxHeight: "300px",
+      minWidth: "260px",
+      minHeight: "170px",
     },
     NoDecoration:{
       textDecoration: "none",
@@ -49,7 +54,7 @@ export default function Error404() {
             <Typography
               color="initial"
               align="center"
-              variant="h3"
+              variant="h4"
               style={{ paddingBottom: 20 }}
               className="Titulo"
             >
@@ -63,9 +68,16 @@ export default function Error404() {
           justify="center"
           className={classes.content}
         >
+          <Hidden smDown>
           <Typography color="initial" align="center" variant="h4">
             Regrese al inicio haciendo click <Link className={classes.NoDecoration} to="/">Aquí</Link>
         </Typography>
+          </Hidden>
+          <Hidden mdUp>
+          <Typography color="initial" align="center" variant="h5">
+            Regrese al inicio haciendo click <Link className={classes.NoDecoration} to="/">Aquí</Link>
+        </Typography>
+          </Hidden>
         </Grid>
       </Grid>
       <Grid item xs={1} md={1} />

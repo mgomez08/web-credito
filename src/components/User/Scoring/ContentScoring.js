@@ -115,7 +115,6 @@ export default function ContentScoring() {
   };
 
   const classes = useStyles();
-  console.log(classes);
   return !scoringForm ? (
     <ProgressCircular
       variantMessage="h4"
