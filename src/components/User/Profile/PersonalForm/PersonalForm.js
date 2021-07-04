@@ -82,6 +82,10 @@ export default function PersonalForm(props) {
                 value: /^([a-z ñáéíóú])+$/i,
                 message: "Solo puede ingresar letras en su nombre",
               },
+              maxLength: {
+                value: 60,
+                message: "Solo se aceptan 60 caracteres como máximo.",
+              },
             })}
           />
           <Typography
@@ -107,6 +111,10 @@ export default function PersonalForm(props) {
               pattern: {
                 value: /^([a-z ñáéíóú])+$/i,
                 message: "Solo puede ingresar letras en su apellido",
+              },
+              maxLength: {
+                value: 60,
+                message: "Solo se aceptan 60 caracteres como máximo.",
               },
             })}
           />
@@ -260,7 +268,7 @@ export default function PersonalForm(props) {
               minLength: {
                 value: 8,
                 message:
-                  "El número de identificación debe tener mínimo 7 digitos",
+                  "El número de identificación debe tener mínimo 8 digitos",
               },
               pattern: {
                 value: /^[^.,-]?\d+$/i,
@@ -637,6 +645,10 @@ export default function PersonalForm(props) {
             defaultValue={userPersonalData.yearsresidence}
             inputRef={register({
               required: { value: true, message: "Campo obligatorio" },
+              max: {
+                value: 30,
+                message: "Ingrese una cantidad de años acertada.",
+              },
             })}
           />
           <Typography
@@ -680,9 +692,6 @@ export default function PersonalForm(props) {
           <Alert onClose={handleClose} variant="filled" severity="success">
             Información Personal Guardada.
           </Alert>
-          {/* <Alert onClose={handleClose} variant="filled" severity="success">
-            Ya Puede calcular su Scoring
-          </Alert> */}
         </Snackbar>
       </Grid>
     </form>

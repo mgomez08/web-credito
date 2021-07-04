@@ -183,6 +183,10 @@ export default function FormRegister() {
                 value: /^([a-z ñáéíóú])+$/i,
                 message: "Solo puede ingresar letras en su nombre",
               },
+              maxLength: {
+                value: 60,
+                message: "Solo se aceptan 60 caracteres como máximo.",
+              },
             })}
           />
           <Typography
@@ -208,6 +212,10 @@ export default function FormRegister() {
               pattern: {
                 value: /^([a-z ñáéíóú])+$/i,
                 message: "Solo puede ingresar letras en su apellido",
+              },
+              maxLength: {
+                value: 60,
+                message: "Solo se aceptan 60 caracteres como máximo.",
               },
             })}
           />
@@ -237,6 +245,10 @@ export default function FormRegister() {
                 value:
                   /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
                 message: "El correo electrónico ingresado no es valido",
+              },
+              maxLength: {
+                value: 100,
+                message: "Solo se aceptan 100 caracteres como máximo.",
               },
             })}
           />
