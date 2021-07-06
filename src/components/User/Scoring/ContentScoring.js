@@ -176,17 +176,17 @@ export default function ContentScoring() {
         </Typography>
          <SnackbarContent className={classes.snackbarGreen}
            message={
-             'Si su puntuje está en el intervalo de 70-100, la probabilidad de que una entidad financiera le niegue un crédito es baja.'
+             'Si su puntuje está en el intervalo de 70-100, la probabilidad de que una entidad financiera apruebe su crédito es alta.'
            }
          />
          <SnackbarContent className={classes.snackbarBlue}
            message={
-             'Si su puntuje está en el intervalo de 40-69, la probabilidad de que una entidad financiera le niegue un crédito es mediana'
+             'Si su puntuje está en el intervalo de 40-69, la probabilidad de que una entidad financiera apruebe su crédito es media'
            }
          />
          <SnackbarContent className={classes.snackbarRed}
            message={
-             'Si su puntuje está en el intervalo de 0-39, la probabilidad de que una entidad financiera le niegue un crédito es alta.'
+             'Si su puntuje está en el intervalo de 0-39, la probabilidad de que una entidad financiera apruebe su crédito es baja.'
            }
          />
         </div>
