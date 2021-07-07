@@ -40,7 +40,7 @@ export default function Footer() {
         <Grid item xs={8}>
           <Grid container className="footer__copyright">
             <Grid item xs={6}>
-              © 2020 ALL RIGHTS RESERVED
+              © 2021 ALL RIGHTS RESERVED
             </Grid>
             <Grid item xs={6}>
               MICRÉDITO

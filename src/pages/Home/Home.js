@@ -91,16 +91,7 @@ export default function Home() {
                 align="justify"
                 style={{ paddingBottom: 15 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Praesent fringilla volutpat ultrices. Morbi pellentesque dolor
-                eget felis feugiat, ac molestie eros facilisis. Quisque semper
-                eu enim in rhoncus. Nam commodo volutpat laoreet. Quisque
-                lobortis ullamcorper felis sit amet viverra. Integer luctus
-                ultricies nibh eu cursus. Class aptent taciti sociosqu ad litora
-                torquent per conubia nostra, per inceptos himenaeos. Maecenas mi
-                nisi, efficitur nec semper varius, ultrices tincidunt dolor.
-                Quisque facilisis ac quam vel semper. Maecenas sodales pharetra
-                elit.
+               MiCrédito es la plataforma diseñada para calcular el puntaje scoring, que ayuda a determinar la probabilidad de aprobación de un crédito basado en información de carácter personal y financiera que las entidades bancarias tienen en cuenta para el conceder sus productos financieros.
               </Typography>
             </Grid>
             <Grid className={classes.containerImg} item xs={12} md={6}>
@@ -124,16 +115,7 @@ export default function Home() {
                 align="justify"
                 style={{ paddingBottom: 15 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Praesent fringilla volutpat ultrices. Morbi pellentesque dolor
-                eget felis feugiat, ac molestie eros facilisis. Quisque semper
-                eu enim in rhoncus. Nam commodo volutpat laoreet. Quisque
-                lobortis ullamcorper felis sit amet viverra. Integer luctus
-                ultricies nibh eu cursus. Class aptent taciti sociosqu ad litora
-                torquent per conubia nostra, per inceptos himenaeos. Maecenas mi
-                nisi, efficitur nec semper varius, ultrices tincidunt dolor.
-                Quisque facilisis ac quam vel semper. Maecenas sodales pharetra
-                elit.
+                Dicho puntaje es asignado de acuerdo a datos de cada persona como los ingresos/egresos mensuales, valor de sus activos totales, si tiene o no algún credito actualmente y sus días de mora. El sistema de información recopila y almacena la información en una base de datos, luego la procesa a través de cálculos necesarios que permiten conocer el valor del scoring.
               </Typography>
             </Grid>
             </Hidden>
@@ -152,16 +134,7 @@ export default function Home() {
                 align="justify"
                 style={{ paddingBottom: 15 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Praesent fringilla volutpat ultrices. Morbi pellentesque dolor
-                eget felis feugiat, ac molestie eros facilisis. Quisque semper
-                eu enim in rhoncus. Nam commodo volutpat laoreet. Quisque
-                lobortis ullamcorper felis sit amet viverra. Integer luctus
-                ultricies nibh eu cursus. Class aptent taciti sociosqu ad litora
-                torquent per conubia nostra, per inceptos himenaeos. Maecenas mi
-                nisi, efficitur nec semper varius, ultrices tincidunt dolor.
-                Quisque facilisis ac quam vel semper. Maecenas sodales pharetra
-                elit.
+               Dicho puntaje es asignado de acuerdo a datos de cada persona como los ingresos/egresos mensuales, valor de sus activos totales, si tiene o no algún credito actualmente y sus días de mora. El sistema de información recopila y almacena la información en una base de datos, luego la procesa a través de cálculos necesarios que permiten conocer el valor del scoring.
               </Typography>
             </Grid>
             <Grid className={classes.containerImg} item xs={12} md={6}>
@@ -182,16 +155,7 @@ export default function Home() {
                 align="justify"
                 style={{ paddingBottom: 15 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Praesent fringilla volutpat ultrices. Morbi pellentesque dolor
-                eget felis feugiat, ac molestie eros facilisis. Quisque semper
-                eu enim in rhoncus. Nam commodo volutpat laoreet. Quisque
-                lobortis ullamcorper felis sit amet viverra. Integer luctus
-                ultricies nibh eu cursus. Class aptent taciti sociosqu ad litora
-                torquent per conubia nostra, per inceptos himenaeos. Maecenas mi
-                nisi, efficitur nec semper varius, ultrices tincidunt dolor.
-                Quisque facilisis ac quam vel semper. Maecenas sodales pharetra
-                elit.
+                El scoring es un puntaje a través del cual las entidades financieras determinan el riesgo de otorgarle o no productos financieros a un cliente.
               </Typography>
             </Grid>
             <Grid className={classes.containerImg} item xs={12} md={6}>

@@ -8,9 +8,7 @@ export default function Info() {
     <div className="info">
       <img src={Logo} alt="MiCrédito" />
       <Typography variant="body1" color="initial">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s.{" "}
+      MiCrédito es la plataforma diseñada para calcular el puntaje scoring, que ayuda a determinar la probabilidad de aprobación de un crédito basado en información de carácter personal y financiera que las entidades bancarias tienen en cuenta para el conceder sus productos financieros.
       </Typography>
     </div>
   );

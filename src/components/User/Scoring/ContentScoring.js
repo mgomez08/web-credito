@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {Link} from "react-router-dom"
 import { Grid, Typography, SnackbarContent } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   snackbar: {
-    backgroundColor: "#F44336",
+    backgroundColor: theme.palette.error.dark,
   },
   button: {
     marginTop: theme.spacing(3),
@@ -135,9 +136,14 @@ export default function ContentScoring() {
       {showAlert ? (
         <div className={classes.root}>
           <SnackbarContent
+            action={
+              <Link to="/perfil" className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-colorInherit">
+                Ir al perfil
+              </Link>
+            }
             className={classes.snackbar}
             message={
-              "No ha completado toda su información, diríjase hacia el menú Perfil y completela."
+              "No ha completado toda su información, ingrese a su perfil para completarla."   
             }
           />
         </div>
