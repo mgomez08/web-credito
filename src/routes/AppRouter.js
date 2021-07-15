@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 export const AppRouter = () => {
   const classes = useStyles();
   const { user, isLoading } = useAuth();
-  console.log(user, isLoading);
 
   if (isLoading) {
     return (

@@ -114,7 +114,7 @@ export default function VerticalTab(props) {
     return () => {
       unmounted = true;
     };
-  }, [onSubmitPersonal, onSubmitFinancial, totalcolumns, setProgress]);
+  }, [onSubmitPersonal, onSubmitFinancial, totalcolumns, setProgress, progress]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

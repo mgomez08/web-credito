@@ -134,12 +134,10 @@ function Tabs(props) {
     } else {
       await saveFormProgressApi({ progress }, getAccessTokenApi());
       setOpen(true);
-      console.log(progress);
       if (progress === 100) {
         handleOpenModal();
       }
     }
-    console.log(progress);
     window.scroll(0, 0);
   };
   return (

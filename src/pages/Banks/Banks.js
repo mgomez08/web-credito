@@ -25,6 +25,9 @@ export default function Banks() {
         <Typography color="initial" align="center" variant="h2" className={classes.title}>
           Lista de Bancos
         </Typography>
+        <Typography color="initial" align="left" variant="h5" className={classes.title}>
+          A continuación encontrará un listado de bancos en los que podrá comparar sus tasas de interés en algunos productos que estos ofrece.
+        </Typography>
         <Grid
           container
           direction="row"

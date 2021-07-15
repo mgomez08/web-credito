@@ -142,7 +142,8 @@ export default function PersonalForm(props) {
             allowKeyboardControl={true}
             maxDateMessage="La fecha ingresada no es valida"
             format="DD/MM/yyyy"
-            maxDate={new Date()}
+            initialFocusedDate={moment().subtract(18, 'years')}
+            maxDate={moment().subtract(18, 'years')}
             value={userPersonalData.datebirth}
             onChange={handleChange}
             inputRef={register({
